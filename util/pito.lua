@@ -8,7 +8,8 @@ require ( 'http' )
 INVOKE_DIR      = MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
 MOAI_SDK_HOME   = MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
 MOAI_CMD        = arg [ 3 ]
-SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help" )
+SCRIPT_DIR      = string.format ( '%s/%s/', MOAIFileSystem.getWorkingDirectory (), MOAI_CMD or "help" )
+PITO_HOME       = MOAIFileSystem.getAbsoluteDirectoryPath (MOAIFileSystem.getWorkingDirectory ()..'../')
 
 local usageText={}
 usageText["wut"] = [[
