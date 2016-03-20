@@ -6,12 +6,13 @@ where lib || echo "Could not find lib.exe (are you in your VS developer tools pr
 
 :haslib
 set arg1=%1
-if "%arg1%"=="" set arg1=vs2013
+if "%arg1%"=="" set arg1=vs2015
 set generator=
 if "%arg1%"=="vs2008" set generator=Visual Studio 9 2008
 if "%arg1%"=="vs2010" set generator=Visual Studio 10
 if "%arg1%"=="vs2012" set generator=Visual Studio 11
 if "%arg1%"=="vs2013" set generator=Visual Studio 12
+if "%arg1%"=="vs2015" set generator=Visual Studio 14
 if "%generator%"=="" (
 	@echo Unknown argument "%1". Valid values are vs2008, vs2010, vs2012, vs2013. Exiting.
 	exit /b 1
@@ -25,9 +26,12 @@ if "%libprefix%"=="" set libprefix=%defaultprefix%
 mkdir "build\build-%arg1%"
 cd "build\build-%arg1%"
 
+
+echo %MOAI_SDK_HOME%
 echo Creating Release Libs
 cmake -G "%generator%" ^
 -DBUILD_WINDOWS=true ^
+-DMOAI_SDK_HOME="%MOAI_SDK_HOME%" ^
 -DMOAI_SDL=true ^
 -DMOAI_HTTP_SERVER=true ^
 -DCMAKE_INSTALL_PREFIX=%libprefix%\Release ^

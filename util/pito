@@ -3,9 +3,12 @@
 # pito - rapa nui for 'navel'  (See: http://www.sacred-texts.com/pac/ei/)
 #
 INVOKE_DIR=$(pwd)
-MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
+PITO_HOME=$(cd $(dirname "${0}")/../ && pwd)
+DEFAULT_SDK=$PITO_HOME/sdk/moai
+
+MOAI_SDK_HOME=${MOAI_SDK_HOME-$DEFAULT_SDK}
 # pito should have its own moai bin local
-MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
+MOAI_SDK_BIN=$PITO_HOME/util/moai
 MOAI_CMD=${1}
 
 # pito needs at least one moai, so it must find it or build it
@@ -52,7 +55,7 @@ then
             then
                 echo "Continuing pito execution..."
             else
-                echo "Something went wrong with building $MOAI_SDK_HOME/util/moai .. exiting!"
+                echo "Something went wrong with building $MOAI_SDK_BIN .. exiting!"
                 exit 1
             fi
         else
@@ -76,6 +79,6 @@ esac
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
 
-pushd $MOAI_SDK_HOME/util > /dev/null
+pushd $PITO_HOME/util > /dev/null
 $MOAI_SDK_BIN pito.lua $@
 popd > /dev/null

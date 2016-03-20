@@ -8,7 +8,7 @@ project ( crypto )
   #set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DOPENSSL_NO_ASM" )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_NO_ASM  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE "  )
 
-  SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
+  #SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
 
   set ( CRYPTO_INCLUDES 
     "${OPENSSL_ROOT}/crypto/"
@@ -599,9 +599,11 @@ project ( crypto )
     ${CMAKE_CURRENT_SOURCE_DIR}/bf/bf_ecb.c  
    )
 
+#SET_SOURCE_FILES_PROPERTIES( ${CRYPTO_SOURCES} PROPERTIES LANGUAGE CXX )
    add_library( crypto STATIC ${CRYPTO_SOURCES} )  
    target_include_directories ( crypto PUBLIC "$<BUILD_INTERFACE:${CRYPTO_INCLUDES}>" )
 set_target_properties( crypto PROPERTIES FOLDER Third-Party )
+#set_target_properties( crypto PROPERTIES LINKER_LANGUAGE CXX)
 
    if (BUILD_WINDOWS)
      target_link_libraries( crypto ws2_32 )

@@ -24,16 +24,6 @@ usageText["environment"] = [[
             (Follow instructions)
 ]]
 
-usageText["init"] = [[
-    pito init
-        Run from your project folder to initialize a pito-managed set of host projects.
-        Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
-        Example:
-            mkdir newMOAIProject && cd newMOAIProject   # use the toolbelt in a new project
-            pito init 
-            vi hostconfig.lua                           #&etc.
-]]
-
 usageText["host"] = [[
     pito host <subcommand> <args>
         Subcommands:
@@ -51,40 +41,10 @@ usageText["host"] = [[
                                  pito host create host osx-app && #etc.
 ]]
 
-usageText["make-lua-docs"] = [[
-    pito make-lua-docs 
-        Creates compact documentation for the Lua-side of the MOAI API.
-]]
-
-usageText["make-cpp-docs"] = [[
-    pito make-cpp-docs
-        Creates compact documentation from the MOAI C/C++ codebase.
-        Example:    
-            cd newMOAIProject && pito make-cpp-docs
-            find moai-sdk/ #&etc.
-]]
-
-usageText["package-cmake-sdk"] = [[
-    pito package-cmake-sdk
-        Creates a distributable SDK based on cmake-driven MOAI build.
-        Example:
-            cd newMOAIProject && pito package-cmake-sdk
-            find moai-sdk/ #&etc.
-]]
-
-usageText["package-sdk"] = [[
-    pito package-sdk
-        Create the standard release of the MOAI SDK.
-]]
-
-usageText["run-samples"] = [[
-    pito run-samples
-        Run the MOAI samples.
-]]
-
-usageText["run-tests"] = [[
-    pito run-tests
-        Run the Test suite.
+usageText["build-sample-browser"] = [[
+    pito build-sample-browser
+        Builds a local copy of the samples that can be viewed by modern browser
+        -o <output-dir> : defaults to ./sample-browser
 ]]
 
 usageText["sdk-version"] = [[

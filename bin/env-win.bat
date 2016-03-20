@@ -1,29 +1,45 @@
 @echo off
 
+rem ----- defaults ----
+
+
+where cmake
+if ERRORLEVEL 1 (
+  if EXIST "%ProgramFiles(x86)%\CMake\bin" set "CMAKE_PATH=%ProgramFiles(x86)%\CMake\bin"
+)
+
+rem visual studio
+where lib.exe
+set VS_TOOLS=
+if not ERRORLEVEL 1 goto :envlocal
+
+set "VS_TOOLS=%VS140COMNTOOLS%"
+if NOT EXIST "%VS_TOOLS%\vsdevcmd.bat"  set "VS_TOOLS=%VS120COMNTOOLS%"
+if NOT EXIST "%VS_TOOLS%\vsdevcmd.bat" set "VS_TOOLS="
+  
+:envlocal
 if exist "%~dp0%\env-local.bat" (
   call "%~dp0%\env-local.bat"
-  ) else (
-  echo "Couldn't find local settings file env-local.bat"
-  echo "Please copy env-local.bat.template to env-local.bat and rerun."
-  exit /b 1
 )
 
 
 rem ---- cmake ------
-echo "Setting CMAKE bin path..."
+
 
 if "%CMAKE_PATH%"=="" goto :vstudio
+echo "Setting CMAKE bin path..."
 set PATH=%PATH%;%CMAKE_PATH%
 
 
 
 rem ---- visual studio ----
 :vstudio
-if "%VS120COMNTOOLS%"=="" echo Visual Studio not found..SKIPPED && goto :ndk 
+
+if "%VS_TOOLS%"=="" echo Visual Studio not found..SKIPPED && goto :ndk 
 echo "Setting Visual Studio path..."
 
 pushd .
-call "%VS120COMNTOOLS%\VsDevCmd.bat"
+call "%VS_TOOLS%\Vsvars32.bat"
 popd
 
 
