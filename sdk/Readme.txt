@@ -1,0 +1,1 @@
+Checkout a copy of the moai-sdk in this folder and the scripts will use it if no MOAI_SDK env variable has been set.
