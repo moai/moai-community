@@ -21,6 +21,8 @@ android {
         main {
             jni.srcDirs = []
             jniLibs.srcDir 'src/main/libs'
+            assets.srcDirs += 'bootstrap'
+            //assets.srcDirs += '@MOAI_LUA_ROOT@'
         }
     }
 }
@@ -41,7 +43,7 @@ dependencies {
     compile project(':moai-googleplayservices')
     compile project(':moai-googlepush')
     compile project(':moai-tapjoy')
-    compile project(':moai-twitter')
+    //compile project(':moai-twitter')
     compile project(':moai-vungle')
 
 }

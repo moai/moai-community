@@ -2,7 +2,7 @@ hostsFolder = INVOKE_DIR..'/hosts/'
 
 --TODO probably should iterate over folders and extract this information so we don't need to keep it up to date
 hosts = { 
-    ["android-gradle"] = "host-android-gradle",
+    ["android"] = "host-android-studio",
     ["html"] = "host-html",
     ["ios"] = "host-ios",
     ["linux"] = "host-linux",
