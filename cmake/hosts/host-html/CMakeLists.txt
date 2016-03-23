@@ -4,7 +4,9 @@ project(host-html)
 
 #build shared lib (libmoaishared.so) and moaijs.js
 set (LUA_LIB_DIR  "")
-set (MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../..")
+set(MOAI_ROOT ${MOAI_SDK_HOME} )
+# Setup the "MOAI_ROOT" variable
+get_filename_component(MOAI_ROOT "${MOAI_ROOT}" ABSOLUTE)
 set (HOST_ROOT "${MOAI_ROOT}/src" )
 get_filename_component(MY_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/../../cmake-modules" ABSOLUTE) 
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${MY_SOURCE}")

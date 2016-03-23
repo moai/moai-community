@@ -17,8 +17,10 @@
 
 : ${EMSCRIPTEN?"EMSCRIPTEN is not defined. Please set to the location of your emscripten install (path)"}
 
+: ${MOAI_SDK_HOME?"MOAI_SDK_HOME is not defined. Please set to the location of your MOAI SDK install (path)"}
+
 cd `dirname $0`/..
-MOAIROOT=$(pwd)
+MOAIROOT=$MOAI_SDK_HOME
 
 mkdir -p build/build-html
 cd build/build-html
@@ -27,6 +29,7 @@ cmake \
 -DEMSCRIPTEN_ROOT_PATH=${EMSCRIPTEN} \
 -DCMAKE_TOOLCHAIN_FILE=${EMSCRIPTEN}/cmake/Modules/Platform/Emscripten.cmake \
 -DBUILD_HTML=TRUE \
+-DMOAI_SDK_HOME="${MOAI_SDK_HOME}" \
 -DCMAKE_BUILD_TYPE=Release \
 -DMOAI_CHIPMUNK=FALSE \
 -DMOAI_CURL=FALSE \

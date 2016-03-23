@@ -2,6 +2,12 @@
 rem :: Determine target directory and cmake generator
 setlocal enableextensions
 
+if "%MOAI_SDK_HOME%"=="" (
+	echo Could not determine location of MOAI SDK, please set MOAI_SDK_HOME
+	exit /b 1
+)
+
+
 where lib || echo "Could not find lib.exe (are you in your VS developer tools prompt?)" && exit /b 1
 
 :haslib
@@ -14,7 +20,7 @@ if "%arg1%"=="vs2012" set generator=Visual Studio 11
 if "%arg1%"=="vs2013" set generator=Visual Studio 12
 if "%arg1%"=="vs2015" set generator=Visual Studio 14
 if "%generator%"=="" (
-	@echo Unknown argument "%1". Valid values are vs2008, vs2010, vs2012, vs2013. Exiting.
+	@echo Unknown argument "%1". Valid values are vs2008, vs2010, vs2012, vs2013, vs2015 Exiting.
 	exit /b 1
 )
 cd %~dp0%..
