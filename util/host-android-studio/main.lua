@@ -54,7 +54,7 @@ MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
 local config = {}
 local configFile = false
 config.OUTPUT_DIR                       = INVOKE_DIR..'hosts/android-studio/'
-config.LIB_SOURCE                      = MOAI_SDK_HOME..'libmoai/'
+config.LIB_SOURCE                      = MOAI_SDK_HOME..'ant/libmoai/'
 config.USE_SYMLINK                      = false
 
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
