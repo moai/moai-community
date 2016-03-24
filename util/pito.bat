@@ -15,24 +15,30 @@ if not exist %MOAI_SDK_HOME% (
 
 where moai >nul 2>&1
 if ERRORLEVEL 1 (
-   echo "Could not find a moai binary in %~dp0 or on the path"
-   pause "attempting to build one (ctrl+c to cancel)"
-   pushd %~dp0%..\
-   echo "launching env"
-   bin\env-win.bat
-   bin\build-windows.bat
-   popd
+
+   if NOT EXIST %~dp0\moai.exe (
+     echo "Could not find a moai binary in %~dp0 or on the path"
+     pause "attempting to build one (ctrl+c to cancel)"
+     pushd %~dp0%..\
+     echo "launching env"
+     bin\env-win.bat
+     bin\build-windows.bat
+     popd
+   )
+)
+
+where pito.bat >nul 2>&1
+if ERRORLEVEL 1 (
+    rem Add to the path to help the user out
+    set "PATH=%~dp0;%PATH%"
 )
 
 setlocal
 
-set SCRIPT_DIR=%~dp0%
+set "SCRIPT_DIR=%~dp0%"
 set "PITO_HOME=%SCRIPT_DIR%..\"
-set INVOKE_DIR=%CD%
+set "INVOKE_DIR=%CD%"
 set MOAI_CMD=%1
-
-rem pito scripts assume pito is on the path
-set PATH=%PATH%;%SCRIPT_DIR%
 
 
 set args=%INVOKE_DIR% %MOAI_SDK_HOME% %MOAI_CMD%
@@ -45,7 +51,7 @@ if "%~1" neq "" (
    shift 
    goto :parse
 )
-pushd %SCRIPT_DIR% 
+pushd "%SCRIPT_DIR%"
 moai pito.lua %args%
 popd 
 
