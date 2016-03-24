@@ -2,6 +2,9 @@
 
 rem ----- defaults ----
 
+rem find sdk
+if "%MOAI_SDK_HOME%" == "" set MOAI_SDK_HOME=%~dp0..\sdk\moai
+
 
 where cmake
 if ERRORLEVEL 1 (

@@ -2,17 +2,13 @@ cd %~dp0%..
 
 setlocal
 
+call env-win.bat
+
 echo "Building windows libs"
 
-call bin\build-windows.bat vs2013 || goto :error
+call bin\build-windows.bat vs2015 || goto :error
 
 echo "windows lib complete"
-
-echo "Creating windows host"
-
-call pito.bat host-windows-vs2013 || goto :error
-
-echo "Windows host Complete"
 
 echo "Building android libs"
 
@@ -20,15 +16,11 @@ call bin\build-android.bat || goto :error
 
 echo "Android lib complete"
 
-echo "Creating android host"
+echo "Building JS libs"
 
-call pito.bat host-android-gradle || goto :error
+call bin\build-html.bat || goto :error
 
-echo "android host Complete"
-
-
-
-
+echo "JS libs complete
 
 
 :error
