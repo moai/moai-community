@@ -12,10 +12,10 @@ rem ----- Build libmoai using sdk methods -----
 pushd "%MOAI_SDK_HOME%\ant"
 if "%1"=="--clean" call libmoai-clean.bat
 echo "Builing libmoai"
-call libmoai-build.bat
+call libmoai-build.bat || echo "Android NDK build failed" && exit /b 1
 
-mkdir %PITO_HOME%\lib\android\libs
-mkdir %PITO_HOME%\lib\android\obj
+mkdir "%PITO_HOME%\lib\android\libs"
+mkdir "%PITO_HOME%\lib\android\obj"
 
 robocopy libmoai\libs "%PITO_HOME%\lib\android\libs" /mir /NDL /NJH /NJS 
 robocopy libmoai\obj "%PITO_HOME%\lib\android\obj" *.a /S /NDL  /NJH /NJS 

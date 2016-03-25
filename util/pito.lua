@@ -25,6 +25,13 @@ usageText["environment"] = [[
             (Follow instructions)
 ]]
 
+usageText["new-project"] = [[
+    pito new-project <project-name>
+        Creates a folder called <project-name> in the current directory and sets it up for moai development.
+        Currently this means a src subfolder with simple sample and a hostconfig.lua file
+        **Project name cannot have spaces**
+]]
+
 usageText["host"] = [[
     pito host <subcommand> <args>
         Subcommands:
