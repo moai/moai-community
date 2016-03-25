@@ -18,7 +18,7 @@ popd
 
 pushd "%PITO_HOME%"
 
-for %%G in (bin,cmake,host-templates,util) DO (
+for %%G in (bin,cmake,host-templates,util,scripts) DO (
   robocopy %%G "%OUTPUT%\%%G" /mir /NDL /NJH /NJS
 )
 

@@ -20,7 +20,7 @@ echo "windows lib complete"
 
 echo "Building android libs"
 
-call scripts\build-android.bat || goto :error
+call scripts\build-android.bat --clean || goto :error
 
 echo "Android lib complete"
 

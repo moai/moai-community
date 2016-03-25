@@ -37,6 +37,7 @@ if ERRORLEVEL 1 (
 setlocal
 
 set "SCRIPT_DIR=%~dp0..\util"
+set "MOAI_BIN=%~dp0"
 set "PITO_HOME=%SCRIPT_DIR%..\"
 set "INVOKE_DIR=%CD%"
 set MOAI_CMD=%1
@@ -53,7 +54,7 @@ if "%~1" neq "" (
    goto :parse
 )
 pushd "%SCRIPT_DIR%"
-%~dp0\moai pito.lua %args%
+"%MOAI_BIN%\moai" pito.lua %args%
 popd 
 
 endlocal

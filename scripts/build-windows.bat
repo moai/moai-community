@@ -40,16 +40,18 @@ cmake -G "%generator%" ^
 -DBUILD_WINDOWS=true ^
 -DMOAI_SDK_HOME="%MOAI_SDK_HOME%" ^
 -DMOAI_SDL=true ^
--DMOAI_HTTP_SERVER=true ^
 -DCMAKE_INSTALL_PREFIX="%libprefix%\Release" ^
-"%rootpath%\cmake\hosts\host-win-sdl" || exit /b 1
+-DMOAI_HTTP_SERVER=true ^
+"%rootpath%\cmake\hosts\host-win-sdl" 
+if ERRORLEVEL 1 exit /b 1
 
 cmake --build . --target INSTALL --config Release -- /verbosity:minimal || exit /b 1
 
 erase  libmoai\third-party\luajit\luajit\src\lua51.lib
 
 echo Creating Debug Libs
-cmake -DCMAKE_INSTALL_PREFIX="%libprefix%\Debug" "%rootpath%\cmake\hosts\host-win-sdl" || exit /b 1
+cmake -DCMAKE_INSTALL_PREFIX="%libprefix%\Debug" "%rootpath%\cmake\hosts\host-win-sdl" 
+if ERRORLEVEL 1 exit /b 1
 
 
 if "%CI%"=="TRUE" goto skipdebug

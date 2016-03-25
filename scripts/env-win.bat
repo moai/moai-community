@@ -85,7 +85,7 @@ echo "Setting Moai Util path..."
 
 pushd .
 cd "%~dp0%/.."
-set "UTIL_PATH=%cd%/bin"
+set "UTIL_PATH=%cd%\bin"
 popd
 
 set "PATH=%PATH%;%UTIL_PATH%"
