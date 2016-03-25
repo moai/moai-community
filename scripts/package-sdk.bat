@@ -21,6 +21,7 @@ pushd "%PITO_HOME%"
 for %%G in (bin,cmake,host-templates,util,scripts) DO (
   robocopy %%G "%OUTPUT%\%%G" /mir /NDL /NJH /NJS
 )
+copy /y util\package-cmake-sdk\README.md "%OUTPUT%\README.md"
 
 mkdir "%OUTPUT%\sdk\moai"
 
@@ -39,6 +40,8 @@ rem unwanted 3rdparty libs
 for %%G in (facebook-ios-sdk-4.5.1,libUAirship-3.0.1,civetweb,chartboost-4.2,flurry-ios-5.0.0,adcolony-2.2.4,vungle-2.0.1,TapjoySDK_iOS_v10.0.2,crittercism-4.3.3,playhaven-ios-1.13.1,kontagent_ios_v1.5.6,MobileAppTracking-ios-2.6,MobileAppTracking-ios,sdl2-2.0.0\test) DO (
   RMDIR /S/Q %%G
 )
+
+
 
 erase /Q "%OUTPUT%\bin\env-local.bat"
 popd
