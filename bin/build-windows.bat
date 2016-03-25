@@ -75,3 +75,4 @@ rd /S/Q %libprefix%\Release
 rd /S/Q %libprefix%\Debug
 
 echo "Build complete"
+exit /b 0

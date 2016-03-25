@@ -27,7 +27,7 @@ mkdir "%OUTPUT%\sdk\moai"
 popd
 pushd "%MOAI_SDK_HOME%"
 
-for %%G in (3rdparty-android,3rdparty,ant,docs,samples,src) DO (
+for %%G in (3rdparty-android,3rdparty,ant,docs,samples,src,util) DO (
   robocopy %%G "%OUTPUT%\sdk\moai\%%G" /mir /NDL /NJH /NJS
 )
 

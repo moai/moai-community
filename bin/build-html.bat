@@ -61,4 +61,4 @@ goto END
 exit /b 1
 
 :END
-
+exit /b 0
