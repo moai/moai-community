@@ -3,7 +3,7 @@
 rem ----- defaults ----
 
 rem find sdk
-if "%MOAI_SDK_HOME%" == "" set MOAI_SDK_HOME=%~dp0..\sdk\moai
+if "%MOAI_SDK_HOME%" == "" set "MOAI_SDK_HOME=%~dp0..\sdk\moai"
 
 
 where cmake
@@ -31,7 +31,7 @@ rem ---- cmake ------
 
 if "%CMAKE_PATH%"=="" goto :vstudio
 echo "Setting CMAKE bin path..."
-set PATH=%PATH%;%CMAKE_PATH%
+set "PATH=%PATH%;%CMAKE_PATH%"
 
 
 
@@ -52,7 +52,7 @@ rem ---- android NDK -------
 if "%NDK_PATH%"=="" goto :mingw
 echo "Setting Android NDK path..."
 
-set ANDROID_NDK=%NDK_PATH%
+set "ANDROID_NDK=%NDK_PATH%"
 
 
 
@@ -61,9 +61,9 @@ rem ----- mingw ----------
 if "%MINGW_PATH%"=="" goto :emsdk
 echo "Setting MingW Gcc path..."
 
-set PATH=%PATH%;%MINGW_PATH%
+set "PATH=%PATH%;%MINGW_PATH%"
 
-set OLD_JAVA_HOME=%JAVA_HOME%
+set "OLD_JAVA_HOME=%JAVA_HOME%"
 
 rem ---- emscripten SDK -------
 :emsdk
@@ -71,11 +71,11 @@ if "%EMSDK_PATH%"=="" goto :util
 echo "Setting Emscripten path..."
 
 pushd .
-cd %EMSDK_PATH%
+cd "%EMSDK_PATH%"
 call emsdk_env.bat
 popd                         
 
-if NOT "%OLD_JAVA_HOME%"=="" set JAVA_HOME=%OLD_JAVA_HOME%
+if NOT "%OLD_JAVA_HOME%"=="" set "JAVA_HOME=%OLD_JAVA_HOME%"
 
 
 
@@ -84,16 +84,16 @@ rem ---- moai util path -----
 echo "Setting Moai Util path..."
 
 pushd .
-cd %~dp0%/..
-set UTIL_PATH=%cd%/util
+cd "%~dp0%/.."
+set "UTIL_PATH=%cd%/bin"
 popd
 
-set PATH=%PATH%;%UTIL_PATH%
+set "PATH=%PATH%;%UTIL_PATH%"
 
 rem ---- Doxygen -----
 if "%DOXYGEN_PATH%"=="" goto :end
 echo "Setting DOXYGEN path..."
-set PATH=%PATH%;%DOXYGEN_PATH%;%DOT_PATH%
+set "PATH=%PATH%;%DOXYGEN_PATH%;%DOT_PATH%"
 
 :end
 echo "Path setup complete"

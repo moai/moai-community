@@ -2,7 +2,7 @@ cd %~dp0%..
 
 setlocal
 
-call bin\env-win.bat
+call scripts\env-win.bat
 
 rem Do we have a chance of success?
 
@@ -14,19 +14,19 @@ where cmake || echo "Cmake 2.8.11+ is required, download from cmake.org" && exit
 
 echo "Building windows libs"
 
-call bin\build-windows.bat vs2015 || goto :error
+call scripts\build-windows.bat vs2015 || goto :error
 
 echo "windows lib complete"
 
 echo "Building android libs"
 
-call bin\build-android.bat || goto :error
+call scripts\build-android.bat || goto :error
 
 echo "Android lib complete"
 
 echo "Building JS libs"
 
-call bin\build-html.bat || goto :error
+call scripts\build-html.bat || goto :error
 
 echo "JS libs complete
 

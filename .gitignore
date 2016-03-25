@@ -6,3 +6,5 @@ util/android-studio/Moai/moai/src/main/obj/local/
 util/android-studio/Moai/moai/src/main/jni/
 bin/env-local.bat
 util/moai.exe
+bin/moai.exe
+scripts/env-local.bat

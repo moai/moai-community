@@ -14,9 +14,9 @@ where cmake || echo "Cmake 2.8.11+ is required, download from cmake.org" && goto
 
 :COMPILE
 
-cd %~dp0%/..
+cd "%~dp0%/.."
 
-set PITOROOT=%cd%
+set "PITOROOT=%cd%"
 
 mkdir build
 cd build
@@ -52,8 +52,8 @@ cmake --build  . --target moaijs || goto ERROR
 
 rem Install into lib
 
-mkdir %PITOROOT%\lib\html
-copy /y moaijs.js %PITOROOT%\lib\html\moaijs.js 
+mkdir "%PITOROOT%\lib\html"
+copy /y moaijs.js "%PITOROOT%\lib\html\moaijs.js"
 
 goto END
 

@@ -2,6 +2,7 @@
 rem :: Determine target directory and cmake generator
 setlocal enableextensions
 
+
 if "%MOAI_SDK_HOME%"=="" (
 	echo Could not determine location of MOAI SDK, please set MOAI_SDK_HOME
 	exit /b 1
@@ -23,11 +24,11 @@ if "%generator%"=="" (
 	@echo Unknown argument "%1". Valid values are vs2008, vs2010, vs2012, vs2013, vs2015 Exiting.
 	exit /b 1
 )
-cd %~dp0%..
-set rootpath=%cd%
-set defaultprefix=%rootpath%\lib\windows\%arg1%
-set libprefix=%2
-if "%libprefix%"=="" set libprefix=%defaultprefix%
+cd "%~dp0.."
+set "rootpath=%cd%"
+set "defaultprefix=%rootpath%\lib\windows\%arg1%"
+set "libprefix=%2"
+if "%libprefix%"=="" set "libprefix=%defaultprefix%"
 
 mkdir "build\build-%arg1%"
 cd "build\build-%arg1%"
@@ -40,15 +41,15 @@ cmake -G "%generator%" ^
 -DMOAI_SDK_HOME="%MOAI_SDK_HOME%" ^
 -DMOAI_SDL=true ^
 -DMOAI_HTTP_SERVER=true ^
--DCMAKE_INSTALL_PREFIX=%libprefix%\Release ^
-%rootpath%\cmake\hosts\host-win-sdl || exit /b 1
+-DCMAKE_INSTALL_PREFIX="%libprefix%\Release" ^
+"%rootpath%\cmake\hosts\host-win-sdl" || exit /b 1
 
 cmake --build . --target INSTALL --config Release -- /verbosity:minimal || exit /b 1
 
 erase  libmoai\third-party\luajit\luajit\src\lua51.lib
 
 echo Creating Debug Libs
-cmake -DCMAKE_INSTALL_PREFIX=%libprefix%\Debug %rootpath%\cmake\hosts\host-win-sdl || exit /b 1
+cmake -DCMAKE_INSTALL_PREFIX="%libprefix%\Debug" "%rootpath%\cmake\hosts\host-win-sdl" || exit /b 1
 
 
 if "%CI%"=="TRUE" goto skipdebug
@@ -56,23 +57,23 @@ cmake --build . --target INSTALL --config Debug  || exit /b 1
 
 :skipdebug
 echo Creating Distribute Libs
-rmdir /S/Q %libprefix%\Distribute\lib
+rmdir /S/Q "%libprefix%\Distribute\lib"
 
-md %libprefix%\Distribute\lib
+md "%libprefix%\Distribute\lib"
 
-lib /OUT:%libprefix%\Distribute\lib\moai.LIB %libprefix%\Release\lib\*.lib || exit /b 1
-lib /OUT:%libprefix%\Distribute\lib\moai_d.LIB %libprefix%\Debug\lib\*.lib || exit /b 1
+lib /OUT:"%libprefix%\Distribute\lib\moai.LIB" "%libprefix%\Release\lib\*.lib" || exit /b 1
+lib /OUT:"%libprefix%\Distribute\lib\moai_d.LIB" "%libprefix%\Debug\lib\*.lib" || exit /b 1
 
-xcopy /S/I/Y %libprefix%\Release\include %libprefix%\Distribute\include  || exit /b 1
-mkdir %libprefix%\Distribute\bin
-copy /Y %libprefix%\Release\bin\moai.exe %libprefix%\Distribute\bin\moai.exe
-mkdir %libprefix%\Distribute\src
-copy /Y %libprefix%\Release\src\*.* %libprefix%\Distribute\src\
+xcopy /S/I/Y "%libprefix%\Release\include" "%libprefix%\Distribute\include"  || exit /b 1
+mkdir "%libprefix%\Distribute\bin"
+copy /Y "%libprefix%\Release\bin\moai.exe" "%libprefix%\Distribute\bin\moai.exe"
+mkdir "%libprefix%\Distribute\src"
+copy /Y "%libprefix%\Release\src\*.*" "%libprefix%\Distribute\src\"
 
-if NOT EXIST %rootpath%\util\moai.exe copy /Y %libprefix%\Release\bin\moai.exe %rootpath%\util\moai.exe
+if NOT EXIST "%rootpath%\bin\moai.exe" copy /Y "%libprefix%\Release\bin\moai.exe" "%rootpath%\bin\moai.exe"
 
-rd /S/Q %libprefix%\Release
-rd /S/Q %libprefix%\Debug
+rd /S/Q "%libprefix%\Release"
+rd /S/Q "%libprefix%\Debug"
 
 echo "Build complete"
 exit /b 0
