@@ -63,7 +63,7 @@ local		makeDlcResourceSig				= nil
 -- osx needs special treatment
 local moaiCopy = MOAIFileSystem.copy
 if osx then
-	MOAIFileSystem.copy = function ( srcpath, dstpath ) copy ( dstpath, srcpath ) end
+	MOAIFileSystem.copy = function ( srcpath, dstpath ) return copy ( dstpath, srcpath ) end
 end
 
 ----------------------------------------------------------------
@@ -116,10 +116,11 @@ copy = function ( dstpath, srcpath )
 		--local cmd = string.format ( 'cp -rp \"%s\" \"%s\"', srcpath, dstpath )
 		local cmd = string.format ( 'ditto \"%s\" \"%s\"', srcpath, dstpath )
 		--print("COPY COMMAND: " .. cmd)
-		print ( cmd )
-		os.execute ( cmd )
+		
+		local res = os.execute ( cmd )
+		return res == 0
 	else
-		moaiCopy ( srcpath, dstpath )
+		return moaiCopy ( srcpath, dstpath )
 	end
 end
 

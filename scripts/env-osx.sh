@@ -9,7 +9,7 @@ if [ ! "$0" == "-bash" ]; then
 fi
 fi
 
-  export MOAI_SDK_HOME=${MOAI_SDK_HOME-$(cd $(dirname "${BASH_SOURCE[0]}")..; pwd)/sdk/moai}
+  export MOAI_SDK_HOME=${MOAI_SDK_HOME-$(cd $(dirname "${BASH_SOURCE[0]}")/../; pwd)/sdk/moai}
   #--User config
   if [ -e "$(dirname ${BASH_SOURCE[0]})/env-local.sh" ]; then
      source $(dirname "${BASH_SOURCE[0]}")/env-local.sh

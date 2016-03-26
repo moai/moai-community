@@ -99,6 +99,7 @@ copyhostfiles = function()
  
   MOAIFileSystem.deleteFile ( output.."moai/src/main/jni/Android.mk")
   MOAIFileSystem.copy ( PITO_HOME..'host-templates/android/Android-prebuilt.mk', output.."moai/src/main/jni/Android.mk" )
+  MOAIFileSystem.copy ( PITO_HOME..'host-templates/android/gradle/local.properties', output.."local.properties")
 end
 
 getAbsoluteLuaRoot = function()
@@ -250,7 +251,7 @@ end
 copylib = function() 
    local output = config.OUTPUT_DIR
   local ANDROID_LIBS = config.LIB_SOURCE
-  MOAIFileSystem.copy ( ANDROID_LIBS.."/jni", output.."moai/src/main/jni" )
+  MOAIFileSystem.copy ( MOAI_SDK_HOME.."ant/libmoai/jni", output.."moai/src/main/jni" )
   MOAIFileSystem.copy ( ANDROID_LIBS.."/libs", output.."moai/src/main/libs" )
 end
 
@@ -263,8 +264,8 @@ linklib = function()
 	end
   
   local isWindows = MOAIEnvironment.osBrand == 'Windows'
-	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'moai/src/main/jni" "'..config.LIB_SOURCE..'/jni"' 
-	                      or 'ln -s "'..config.LIB_SOURCE..'/jni" "'..config.OUTPUT_DIR..'moai/src/main/jni"'
+	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'moai/src/main/jni" "'..MOAISDK_HOME..'ant/libmoai/jni"' 
+	                      or 'ln -s "'..MOAI_SDK_HOME..'ant/libmoai/jni" "'..config.OUTPUT_DIR..'moai/src/main/jni"'
 	if os.execute(cmd) > 0 then
 	   print ("Error creating link, try running as administrator")
 	end
