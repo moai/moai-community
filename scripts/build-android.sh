@@ -1,73 +1,25 @@
-#!/bin/bash
-if [ x$ANDROID_NDK == x ]; then
-   echo ANDROID_NDK variable was not set. Please set to your ndk path
-   exit 1
+
+PITO_ROOT=$(cd `dirname $0`/.. && pwd)
+: "${MOAI_SDK_HOME:?Please set MOAI_SDK_HOME variable to point to your Moai SDK }"
+: "${ANDROID_NDK:?You need to set ANDROID_NDK to point to your ndk path. Try using env-local.sh }"
+
+#----- Build libmoai using sdk methods -----
+
+export PATH=$ANDROID_NDK:$PATH
+
+echo "Builing libmoai"
+
+pushd $MOAI_SDK_HOME/ant
+if [ "$1" == "--clean" ]; then 
+  ./libmoai-clean.sh 
 fi
-
-which cmake || (echo Could not find cmake ; exit 1)
-
-#get cores
-if [ "$OSTYPE" == "linux-gnu" ]; then
-  cores=$(getconf _NPROCESSORS_ONLN)
-else
-  cores=$(sysctl -n hw.logicalcpu_max)
-fi
-
-#override cores for ci
-if [ "$CI" == "true" ]; then
-  cores=2
-fi
-
-if [ x$1 == x ]; then
-  libprefix=`dirname $0`/../lib/android
-else
-  libprefix=$1
-fi
-
-mkdir -p $libprefix
-libprefix=$(cd $libprefix; pwd)
-
-
-cd `dirname $0`/..
-moai_root=$(pwd)
-
-
-if ! [ -d "build" ]
-then
-mkdir build
-fi
-cd build
-
-
-
-
-build_folder=$moai_root/build
-#we must have a success from here on
-set -e
-
-ARCHS="armeabi armeabi-v7a x86"
-for ARCH in $ARCHS
-do
-
-  cd $build_folder
   
-  
-  if ! [ -d "build-android-$ARCH" ]
-  then
-  mkdir build-android-$ARCH
-  fi
-  cd build-android-$ARCH
+./libmoai-build.sh || ( echo "Android NDK build failed" && exit 1)
 
-  cmake \
-  -DBUILD_ANDROID=TRUE \
-  -DCMAKE_TOOLCHAIN_FILE="$moai_root/cmake/hosts/host-android/android.toolchain.cmake" \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DMOAI_LUAJIT=False \
-  -DANDROID_ABI=$ARCH \
-  -DCMAKE_INSTALL_PREFIX=$libprefix/$ARCH \
-  -DLIBRARY_OUTPUT_PATH_ROOT=./build-android-$ARCH/ \
-  $moai_root/cmake || exit 1
+mkdir -p $PITO_ROOT/lib/android/libs
+mkdir -p $PITO_ROOT/lib/android/obj
 
-  cmake --build . --target install -- -j$cores
-  echo Finished building $ARCH
-done
+cp -a libmoai/libs/ $PITO_ROOT/lib/android/libs
+(cd libmoai/obj && find . -type f -name \*.a -exec tar cf - {} +) | (cd $PITO_ROOT/lib/android/obj && tar xf -)
+
+popd

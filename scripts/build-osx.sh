@@ -4,57 +4,15 @@
 # Build script for Mac OSX
 # Usage: Run from Moai SDK's root directory:
 #
-# build-osx-sdl.sh
-#
-# You can change the CMake options using -DOPTION=VALUE
-# Check moai-dev/cmake/CMakeLists.txt for all the available options.
-#
-if [ x$1 == x ]; then
-  libprefix=`dirname $0`/../lib/osx
-else
-  libprefix=$1
-fi
-mkdir -p $libprefix
+# build-osx.sh
 
-libprefix=$(cd $libprefix; pwd)
+: "${MOAI_SDK_HOME:?Please set MOAI_SDK_HOME variable to point to your MOAI Sdk }"
 
-cd `dirname $0`/..
+$MOAI_SDK_HOME/util/build/build-osx.sh
 
+PITO_ROOT=$(cd `dirname $0`/.. && pwd)
 
-
-moai_root=$(pwd)
-
-
-if ! [ -d "build" ]
-then
-mkdir build
-fi
-cd build
-
-if ! [ -d "build-osx" ]
-then
-mkdir build-osx
-fi
-cd build-osx
-
-set -e
-cmake -G "Xcode" \
--DBUILD_OSX=TRUE \
--DMOAI_APPLE=TRUE \
--DMOAI_SDL=TRUE \
--DMOAI_HTTP_SERVER=TRUE \
--DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_PREFIX=$libprefix \
-$moai_root/cmake/hosts/host-osx-sdl
-
-if hash xcpretty 2>/dev/null; then
-  set -o pipefail && cmake --build . --target install --config Release | xcpretty -c
-else
-  cmake --build . --target install --config Release
-fi
-
-
-if [ ! -e "$moai_root/util/moai" ]; then
-   cp $libprefix/bin/moai $moai_root/util/moai
+if [ ! -e "$PITO_ROOT/bin/moai" ]; then
+   cp $MOAI_SDK_HOME/bin/osx/moai $PITO_ROOT/bin/moai
 fi
 

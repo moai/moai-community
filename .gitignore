@@ -8,3 +8,4 @@ bin/env-local.bat
 util/moai.exe
 bin/moai.exe
 scripts/env-local.bat
+env-local.sh
