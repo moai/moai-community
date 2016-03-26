@@ -20,7 +20,7 @@
 : ${MOAI_SDK_HOME?"MOAI_SDK_HOME is not defined. Please set to the location of your MOAI SDK install (path)"}
 
 cd `dirname $0`/..
-MOAIROOT=$MOAI_SDK_HOME
+PITO_ROOT=$(pwd)
 
 mkdir -p build/build-html
 cd build/build-html
@@ -45,7 +45,7 @@ cmake \
 -DMOAI_WEBP=FALSE \
 -DMOAI_HTTP_CLIENT=FALSE \
 -DMOAI_LUAJIT=FALSE \
-$MOAIROOT/cmake/hosts/host-html
+${PITO_ROOT}/cmake/hosts/host-html
 
 if [[ $? -ne 0 ]]; then
     exit 1
@@ -57,6 +57,6 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-mkdir -p $MOAIROOT/lib/html
-cp moaijs.js $MOAIROOT/lib/html/moaijs.js
+mkdir -p ${PITO_ROOT}/lib/html
+cp moaijs.js ${PITO_ROOT}/lib/html/moaijs.js
 

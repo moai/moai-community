@@ -37,9 +37,9 @@ fi
 
 if [ ! -z "$EMSDK_PATH" ]; then
   echo "Setting Emscripten path..."
-  pushd . > /dev/null
-  cd $EMSDK_PATH
-  . ./emsdk_env.sh
+  pushd $EMSDK_PATH > /dev/null
+  ls
+  source ./emsdk_env.sh
   popd > /dev/null
 else
   echo "No EMSDK_PATH specified, JS libs will not be buildable"
