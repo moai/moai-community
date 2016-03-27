@@ -6,14 +6,14 @@ PITO_ROOT=$(cd `dirname $0`/.. && pwd)
 #----- Build libmoai using sdk methods -----
 
 export PATH=$ANDROID_NDK:$PATH
-
+echo $PATH
 echo "Builing libmoai"
 
 pushd $MOAI_SDK_HOME/ant
-if [ "$1" == "--clean" ]; then 
-  ./libmoai-clean.sh 
+if [ "$1" == "--clean" ]; then
+  ./libmoai-clean.sh
 fi
-  
+
 ./libmoai-build.sh || ( echo "Android NDK build failed" && exit 1)
 
 mkdir -p $PITO_ROOT/lib/android/libs
