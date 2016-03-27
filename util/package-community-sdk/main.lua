@@ -1,10 +1,11 @@
 --==============================================================
 -- args
 --==============================================================
-
-OUTPUT_DIR			= INVOKE_DIR .. 'moai-sdk/'
+VERSION = dofile ( MOAI_SDK_HOME..'/util/sdk-version/version.lua' )
+OUTPUT_DIR			= INVOKE_DIR .. 'moai-sdk-'..string.format ( '%d.%d.%d', VERSION.MAJOR, VERSION.MINOR, VERSION.REVISION or -1 )..'/'
 
 COPY_FILES			= {}
+PITO_FILES      = {}
 CLEAN_DIRS			= {}
 DEV_PLATFORM		= nil
 
@@ -49,12 +50,13 @@ processConfigFile = function ( filename )
 	local config = {}
 	util.dofileWithEnvironment ( filename, config )
 
+  util.mergeTables ( PITO_FILES, config.PITO_FILES)
+	
 	util.mergeTables ( COPY_FILES, config.COMMON )
-	
-	
 	util.mergeTables ( COPY_FILES, config[DEV_PLATFORM] )
 	
 	util.mergeTables ( CLEAN_DIRS, config.CLEAN_DIRS )
+	util.mergeTables ( CLEAN_DIRS, config['CLEAN_DIRS_'..DEV_PLATFORM])
 end
 
 --==============================================================
@@ -73,20 +75,28 @@ MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
 MOAIFileSystem.copy ( 'moai-sdk', OUTPUT_DIR )
 
 if MOAIEnvironment.osBrand == 'Windows' then
-	moaiexec ( 'prepare-sdk-windows.bat')
+--	moaiexec ( 'prepare-sdk-windows.bat')
 else
-	moaiexec ( './prepare-sdk-osx.sh' )
+--	moaiexec ( './prepare-sdk-osx.sh' )
 end
+
+for k, v in pairs ( PITO_FILES ) do
+	v = v == true and k or v
+	print ( 'COPYING:', k, v )
+	MOAIFileSystem.copy ( PITO_HOME .. k, OUTPUT_DIR .. v )
+end
+
+
 
 for k, v in pairs ( COPY_FILES ) do
 	v = v == true and k or v
 	print ( 'COPYING:', k, v )
-	MOAIFileSystem.copy ( MOAI_SDK_HOME .. k, OUTPUT_DIR .. v )
+	MOAIFileSystem.copy ( MOAI_SDK_HOME .. k, OUTPUT_DIR..'/sdk/moai/' .. v )
 end
 
-for i, v in ipairs ( CLEAN_DIRS ) do
-	print ( 'CLEANING:', v )
-	MOAIFileSystem.deleteDirectory ( OUTPUT_DIR .. v, true )
+for k, v in pairs ( CLEAN_DIRS ) do
+	print ( 'CLEANING:', k )
+	MOAIFileSystem.deleteDirectory (  OUTPUT_DIR..'/sdk/moai/'.. k, true )
 end
 
-moaiexec ( 'pito make-lua-docs -o "%sdocs/sdk-lua-reference"', OUTPUT_DIR )
+--moaiexec ( 'pito make-lua-docs -o "%sdocs/sdk-lua-reference"', OUTPUT_DIR )
