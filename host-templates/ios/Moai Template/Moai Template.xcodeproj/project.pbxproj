@@ -32,9 +32,9 @@
 		636B59851CA77BCE00AAD4B0 /* libmoai-ios-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B596D1CA77BCE00AAD4B0 /* libmoai-ios-zl-crypto.a */; };
 		636B59861CA77BCE00AAD4B0 /* libmoai-ios-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B596E1CA77BCE00AAD4B0 /* libmoai-ios-zl-vfs.a */; };
 		636B59871CA77BCE00AAD4B0 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B596F1CA77BCE00AAD4B0 /* libmoai-ios.a */; };
-		636B598B1CA77D0B00AAD4B0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59881CA77D0B00AAD4B0 /* FBSDKCoreKit.framework */; };
-		636B598C1CA77D0B00AAD4B0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59891CA77D0B00AAD4B0 /* FBSDKLoginKit.framework */; };
-		636B598D1CA77D0B00AAD4B0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B598A1CA77D0B00AAD4B0 /* FBSDKShareKit.framework */; };
+		636B599C1CA783E200AAD4B0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59991CA783E200AAD4B0 /* FBSDKCoreKit.framework */; };
+		636B599D1CA783E200AAD4B0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B599A1CA783E200AAD4B0 /* FBSDKLoginKit.framework */; };
+		636B599E1CA783E200AAD4B0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B599B1CA783E200AAD4B0 /* FBSDKShareKit.framework */; };
 		6396B95D1BD67CA20065A9E7 /* aku_plugins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6396B95C1BD67CA20065A9E7 /* aku_plugins.cpp */; };
 		63CF1A0B1A065C7700F731F1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63CF19FA1A065C7700F731F1 /* Default-568h@2x.png */; };
 		63CF1AC01A06610600F731F1 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63CF1AB61A06610600F731F1 /* aku_modules.cpp */; };
@@ -97,9 +97,9 @@
 		636B596D1CA77BCE00AAD4B0 /* libmoai-ios-zl-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-crypto.a"; path = "lib/libmoai-ios-zl-crypto.a"; sourceTree = "<group>"; };
 		636B596E1CA77BCE00AAD4B0 /* libmoai-ios-zl-vfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-vfs.a"; path = "lib/libmoai-ios-zl-vfs.a"; sourceTree = "<group>"; };
 		636B596F1CA77BCE00AAD4B0 /* libmoai-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios.a"; path = "lib/libmoai-ios.a"; sourceTree = "<group>"; };
-		636B59881CA77D0B00AAD4B0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "3rdparty/facebook-ios-sdk-4.5.1/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
-		636B59891CA77D0B00AAD4B0 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "3rdparty/facebook-ios-sdk-4.5.1/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
-		636B598A1CA77D0B00AAD4B0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "3rdparty/facebook-ios-sdk-4.5.1/FBSDKShareKit.framework"; sourceTree = "<group>"; };
+		636B59991CA783E200AAD4B0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "3rdparty/facebook-ios-sdk-4.5.1/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		636B599A1CA783E200AAD4B0 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "3rdparty/facebook-ios-sdk-4.5.1/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		636B599B1CA783E200AAD4B0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "3rdparty/facebook-ios-sdk-4.5.1/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 		6396B95C1BD67CA20065A9E7 /* aku_plugins.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aku_plugins.cpp; sourceTree = "<group>"; };
 		63CF19C11A065B5400F731F1 /* Moai Template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moai Template.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CF19FA1A065C7700F731F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "res/Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -151,9 +151,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				636B598B1CA77D0B00AAD4B0 /* FBSDKCoreKit.framework in Frameworks */,
-				636B598C1CA77D0B00AAD4B0 /* FBSDKLoginKit.framework in Frameworks */,
-				636B598D1CA77D0B00AAD4B0 /* FBSDKShareKit.framework in Frameworks */,
+				636B599C1CA783E200AAD4B0 /* FBSDKCoreKit.framework in Frameworks */,
+				636B599D1CA783E200AAD4B0 /* FBSDKLoginKit.framework in Frameworks */,
+				636B599E1CA783E200AAD4B0 /* FBSDKShareKit.framework in Frameworks */,
 				636B59701CA77BCE00AAD4B0 /* libmoai-ios-3rdparty-core.a in Frameworks */,
 				636B59711CA77BCE00AAD4B0 /* libmoai-ios-3rdparty-crypto.a in Frameworks */,
 				636B59721CA77BCE00AAD4B0 /* libmoai-ios-apple.a in Frameworks */,
@@ -211,9 +211,9 @@
 		636B59981CA77F3F00AAD4B0 /* SDK Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				636B59881CA77D0B00AAD4B0 /* FBSDKCoreKit.framework */,
-				636B59891CA77D0B00AAD4B0 /* FBSDKLoginKit.framework */,
-				636B598A1CA77D0B00AAD4B0 /* FBSDKShareKit.framework */,
+				636B59991CA783E200AAD4B0 /* FBSDKCoreKit.framework */,
+				636B599A1CA783E200AAD4B0 /* FBSDKLoginKit.framework */,
+				636B599B1CA783E200AAD4B0 /* FBSDKShareKit.framework */,
 			);
 			name = "SDK Libraries";
 			path = ../../../sdk/moai;
@@ -506,11 +506,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/libmoai/lib",
-					"/Users/david/moai-community/sdk/moai/3rdparty/facebook-ios-sdk-4.5.1",
-					"/Users/david/moai-community/sdk/moai/3rdparty/adcolony-2.2.4",
-					"/Users/david/moai-community/sdk/moai/3rdparty/kontagent_ios_v1.5.6",
-					"/Users/david/moai-community/sdk/moai/3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					"$(SRCROOT)/lib",
+					"$(MOAI_SDK_HOME)/3rdparty/facebook-ios-sdk-4.5.1",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"AKU_WITH_IOS=1",
@@ -519,15 +516,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/libmoai/include",
+					"$(MOAI_SDK_HOME)/src",
 					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/res/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/libmoai/lib",
-					"$(PROJECT_DIR)/libmoai/lib",
 					"$(PROJECT_DIR)/lib",
 				);
 				PRODUCT_NAME = "Moai Template";
@@ -543,21 +538,20 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/libmoai/lib",
+					"$(SRCROOT)/lib",
+					"$(MOAI_SDK_HOME)/3rdparty/facebook-ios-sdk-4.5.1",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = "AKU_WITH_IOS=1";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/libmoai/include",
+					"$(MOAI_SDK_HOME)/src",
 					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/res/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/libmoai/lib",
-					"$(PROJECT_DIR)/libmoai/lib",
 					"$(PROJECT_DIR)/lib",
 				);
 				PRODUCT_NAME = "Moai Template";
