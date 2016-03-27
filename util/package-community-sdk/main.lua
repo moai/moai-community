@@ -2,18 +2,23 @@
 -- args
 --==============================================================
 VERSION = dofile ( MOAI_SDK_HOME..'/util/sdk-version/version.lua' )
-OUTPUT_DIR			= INVOKE_DIR .. 'moai-sdk-'..string.format ( '%d.%d.%d', VERSION.MAJOR, VERSION.MINOR, VERSION.REVISION or -1 )..'/'
 
-COPY_FILES			= {}
-PITO_FILES      = {}
-CLEAN_DIRS			= {}
 DEV_PLATFORM		= nil
 
 if (MOAIEnvironment.osBrand == 'Windows') then
 	DEV_PLATFORM = 'WINDOWS'
 else
-	DEV_PLATFORM = 'MAC'
+	DEV_PLATFORM = 'OSX'
 end
+
+OUTPUT_DIR			= INVOKE_DIR .. 'moaisdk-'..string.lower(DEV_PLATFORM).."-"..string.format ( '%d.%d.%d', VERSION.MAJOR, VERSION.MINOR, VERSION.REVISION or -1 )..'/'
+
+COPY_FILES			= {}
+PITO_FILES      = {}
+CLEAN_DIRS			= {}
+
+
+
 
 
 ----------------------------------------------------------------

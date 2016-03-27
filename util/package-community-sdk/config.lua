@@ -17,7 +17,7 @@ COMMON = {
 }
 
 
-MAC = {
+OSX = {
 }
 
 WINDOWS = {
@@ -29,10 +29,12 @@ LINUX = {
 
 CLEAN_DIRS = {
   	['3rdparty/civetweb'] = true,
-		['3rdparty/sdl2-2.0.0/test'] = true
+		['3rdparty/sdl2-2.0.0/test'] = true,
+		['ant/libmoai/libs'] = true,
+		['ant/libmoai/obj'] = true,
 }
 
-CLEAN_DIRS_MAC = {
+CLEAN_DIRS_OSX = {
 	
 }
 
