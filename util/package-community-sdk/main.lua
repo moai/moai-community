@@ -104,4 +104,6 @@ for k, v in pairs ( CLEAN_DIRS ) do
 	MOAIFileSystem.deleteDirectory (  OUTPUT_DIR..'/sdk/moai/'.. k, true )
 end
 
+MOAIFileSystem.deleteFile( OUTPUT_DIR..'scripts/env-local.sh')
+MOAIFileSystem.deleteFile( OUTPUT_DIR..'scripts/env-local.bat')
 --moaiexec ( 'pito make-lua-docs -o "%sdocs/sdk-lua-reference"', OUTPUT_DIR )
