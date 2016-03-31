@@ -3,7 +3,9 @@ PITO_FILES = {
 	['cmake'] = true,
 	['host-templates'] = true,
 	['util'] = true,
-	['scripts'] = true
+	['scripts'] = true,
+	['lib/html'] = true,
+	['lib/android/libs'] = true
 }
 
 COMMON = {
