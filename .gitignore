@@ -1,6 +1,6 @@
 sdk/
 build/
-lib/
+/lib/
 util/android-studio/Moai/moai/src/main/libs/
 util/android-studio/Moai/moai/src/main/obj/local/
 util/android-studio/Moai/moai/src/main/jni/
