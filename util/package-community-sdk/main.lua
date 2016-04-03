@@ -7,6 +7,8 @@ DEV_PLATFORM		= nil
 
 if (MOAIEnvironment.osBrand == 'Windows') then
 	DEV_PLATFORM = 'WINDOWS'
+elseif (MOAIEnvironment.osBrand == 'Linux') then
+	DEV_PLATFORM = 'LINUX'
 else
 	DEV_PLATFORM = 'OSX'
 end
@@ -23,7 +25,7 @@ CLEAN_DIRS			= {}
 
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
-	
+
 	if param then
 
 		if escape == 'p' or escape == 'platform' then
@@ -33,8 +35,8 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 		if escape == 'o' or escape == 'out' then
 			if not util.isAbsPath ( param ) then
 				param = INVOKE_DIR .. param
-			end 
-			
+			end
+
 			OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath ( param )
 		end
 	end
@@ -56,10 +58,10 @@ processConfigFile = function ( filename )
 	util.dofileWithEnvironment ( filename, config )
 
   util.mergeTables ( PITO_FILES, config.PITO_FILES)
-	
+
 	util.mergeTables ( COPY_FILES, config.COMMON )
 	util.mergeTables ( COPY_FILES, config[DEV_PLATFORM] )
-	
+
 	util.mergeTables ( CLEAN_DIRS, config.CLEAN_DIRS )
 	util.mergeTables ( CLEAN_DIRS, config['CLEAN_DIRS_'..DEV_PLATFORM])
 end

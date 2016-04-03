@@ -5,8 +5,7 @@ echo "Importing local env"
 # MOAI_SDK_HOME=/Users/moaiuser/moai-dev
 
 ## Path to the Android NDK
-#NDK_PATH=/Users/moaiuser/Downloads/android-ndk-r11b
+NDK_PATH=/home/david/Downloads/android-ndk-r11b
 
 ## Path to Emscripten SDK
 #EMSDK_PATH=/Users/moaiuser/Downloads/emsdk_portable
-
