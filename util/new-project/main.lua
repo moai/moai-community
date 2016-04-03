@@ -41,8 +41,8 @@ end
 
 
 MOAIFileSystem.setWorkingDirectory(MOAIFileSystem.getAbsoluteDirectoryPath(projectName));
-
-os.execute("pito host init")
+local cmd = string.format('"%sbin/pito" host init',MOAIFileSystem.getAbsoluteDirectoryPath(PITO_HOME))
+os.execute(cmd)
 
 util.replaceInFiles ({
 	  
