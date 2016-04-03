@@ -10,3 +10,4 @@ bin/moai.exe
 scripts/env-local.bat
 env-local.sh
 /bin/moai
+/moaisdk-*
