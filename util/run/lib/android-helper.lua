@@ -4,8 +4,13 @@ local M_mt = { __index = M }
 
 
 function M:findJava()
+    
   local fromenv = os.getenv("JAVA_HOME")
   if fromenv then return MOAIFileSystem.getAbsoluteDirectoryPath(fromenv.."/bin") end
+  
+  --it is just on the path on osx
+  if MOAIEnvironment.osBrand == MOAIEnvironment.OS_BRAND_OSX then return "" end
+  
   
   return false
 end
@@ -195,7 +200,7 @@ function M:dumpManifest(apk)
     return false
   end
   
-  local cmd = string.format('"%s" d xmltree "%s" AndroidManifest.xml"',aapt, apk)
+  local cmd = string.format('"%s" d xmltree "%s" AndroidManifest.xml',aapt, apk)
   if (MOAIEnvironment.osBrand == 'Windows') then cmd = '"'..cmd..'"' end
   --get contents of file and return
   return os_capture(cmd)

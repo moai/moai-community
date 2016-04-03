@@ -189,6 +189,7 @@ function runLinux()
 end
 
 function runOsx()
+  local moai = MOAIFileSystem.getAbsoluteFilePath(PITO_HOME)..'/bin/moai'
   print("Running bundled Moai")
   print("\nOutput:\n")
   os.execute(moai..' "'..srcFile..'"')
