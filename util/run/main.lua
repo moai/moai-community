@@ -55,7 +55,7 @@ function getTempDir()
   assert(tempdir, "Could not file temp directory")
   
   tempdir = MOAIFileSystem.getAbsoluteDirectoryPath(tempdir)
-  --math.randomseed( os.time() )
+  math.randomseed( os.time() )
   --now append some random stuff
   tempdir = tempdir.."pitoApkRun-"..tostring(math.random(1000000))
   
