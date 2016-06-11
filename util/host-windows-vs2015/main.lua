@@ -25,7 +25,7 @@ local hostconfig = {
 local config = {}
 
 config.OUTPUT_DIR                      = INVOKE_DIR..'hosts/vs2015/'
-config.LIB_SOURCE                      = PITO_HOME..'lib/windows/vs2015/Distribute/'
+config.LIB_SOURCE                      = PITO_HOME..'lib/windows/vs2015/'
 config.USE_SYMLINK                     = false
 
 MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
