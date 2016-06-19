@@ -58,6 +58,7 @@ target_link_libraries ( moaishared
   moai-sim
   moai-util
   moai-core
+  moai-util
   zlcore
 )
 
