@@ -25,7 +25,7 @@ local hostconfig = {
 local config = {}
 
 config.OUTPUT_DIR                      = INVOKE_DIR..'hosts/vs2015/'
-config.LIB_SOURCE                      = PITO_HOME..'lib/windows/vs2015/Distribute/'
+config.LIB_SOURCE                      = PITO_HOME..'lib/windows/vs2015/'
 config.USE_SYMLINK                     = false
 
 MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
@@ -80,6 +80,34 @@ copyhostfiles = function()
     MOAIFileSystem.copy(sdlhost, output..'host-sdl')
     MOAIFileSystem.copy(hostmodules, output..'host-modules')
 
+    --includes
+    for f in util.iterateFiles(MOAI_SDK_HOME..'src', "host.h") do
+      --filepath =  util.getFolderFromPath(f)
+      --MOAIFileSystem.affirmPath(output..'sdk/src/'..filepath)
+      MOAIFileSystem.copy(MOAI_SDK_HOME..'src/'..f, output..'sdk/src/'..f)
+    end
+    
+    
+    for f in util.iterateFiles(MOAI_SDK_HOME..'src/zl-util', '.*%.h') do
+      MOAIFileSystem.copy(MOAI_SDK_HOME..'src/zl-util/'..f, output..'sdk/src/zl-util/'..f)
+    end
+    
+    for f in util.iterateFiles(MOAI_SDK_HOME..'src/zl-vfs', '.*%.h') do
+      MOAIFileSystem.copy(MOAI_SDK_HOME..'src/zl-vfs/'..f, output..'sdk/src/zl-vfs/'..f)
+    end
+    
+   local extras = { 'moai-sim/MOAIKeyCodeEnum.h', 'lua-headers', 'zl-common'}
+   for _ , f in pairs(extras) do
+      MOAIFileSystem.copy(MOAI_SDK_HOME..'src/'..f, output..'sdk/src/'..f)
+   end
+   
+   
+   
+    --sdl
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'3rdparty/sdl2-2.0.4/include', output..'sdk/3rdparty/sdl2-2.0.4/include')
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'3rdparty/sdl2-2.0.4/include-moai', output..'sdk/3rdparty/sdl2-2.0.4/include-moai')
+    
+    
     --don't want these ones
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios_config.h')

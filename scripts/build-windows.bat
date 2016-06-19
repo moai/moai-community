@@ -9,73 +9,25 @@ if "%MOAI_SDK_HOME%"=="" (
 )
 
 
-where lib || echo "Could not find lib.exe (are you in your VS developer tools prompt?)" && exit /b 1
+where msbuild || echo "Could not find msbuild.exe (are you in your VS developer tools prompt?)" && exit /b 1
 
-:haslib
-set arg1=%1
-if "%arg1%"=="" set arg1=vs2015
-set generator=
-if "%arg1%"=="vs2008" set generator=Visual Studio 9 2008
-if "%arg1%"=="vs2010" set generator=Visual Studio 10
-if "%arg1%"=="vs2012" set generator=Visual Studio 11
-if "%arg1%"=="vs2013" set generator=Visual Studio 12
-if "%arg1%"=="vs2015" set generator=Visual Studio 14
-if "%generator%"=="" (
-	@echo Unknown argument "%1". Valid values are vs2008, vs2010, vs2012, vs2013, vs2015 Exiting.
-	exit /b 1
-)
+
 cd "%~dp0.."
 set "rootpath=%cd%"
-set "defaultprefix=%rootpath%\lib\windows\%arg1%"
-set "libprefix=%2"
-if "%libprefix%"=="" set "libprefix=%defaultprefix%"
-
-mkdir "build\build-%arg1%"
-cd "build\build-%arg1%"
+set "libprefix=%rootpath%\lib\windows\vs2015"
+set "projpath=%MOAI_SDK_HOME%\vs2015"
 
 
-echo %MOAI_SDK_HOME%
 echo Creating Release Libs
-cmake -G "%generator%" ^
--DBUILD_WINDOWS=true ^
--DMOAI_SDK_HOME="%MOAI_SDK_HOME%" ^
--DMOAI_SDL=true ^
--DCMAKE_INSTALL_PREFIX="%libprefix%\Release" ^
--DMOAI_HTTP_SERVER=true ^
-"%rootpath%\cmake\hosts\host-win-sdl" 
-if ERRORLEVEL 1 exit /b 1
+msbuild %projpath%\moai.sln /verbosity:minimal /t:Moai\moai /p:Configuration=Release || echo "Error during build" && exit /b 1
 
-cmake --build . --target INSTALL --config Release -- /verbosity:minimal || exit /b 1
-
-erase  libmoai\third-party\luajit\luajit\src\lua51.lib
+robocopy "%projpath%\bin\win32\Release" "%libprefix%\Release" /MIR 
 
 echo Creating Debug Libs
-cmake -DCMAKE_INSTALL_PREFIX="%libprefix%\Debug" "%rootpath%\cmake\hosts\host-win-sdl" 
-if ERRORLEVEL 1 exit /b 1
+msbuild %projpath%\moai.sln /verbosity:minimal /t:Moai\moai /p:Configuration=Debug || echo "Error during build" && exit /b 1
 
+robocopy "%projpath%\bin\win32\Debug" "%libprefix%\Debug" /MIR 
 
-if "%CI%"=="TRUE" goto skipdebug
-cmake --build . --target INSTALL --config Debug  || exit /b 1
-
-:skipdebug
-echo Creating Distribute Libs
-rmdir /S/Q "%libprefix%\Distribute\lib"
-
-md "%libprefix%\Distribute\lib"
-
-lib /OUT:"%libprefix%\Distribute\lib\moai.LIB" "%libprefix%\Release\lib\*.lib" || exit /b 1
-lib /OUT:"%libprefix%\Distribute\lib\moai_d.LIB" "%libprefix%\Debug\lib\*.lib" || exit /b 1
-
-xcopy /S/I/Y "%libprefix%\Release\include" "%libprefix%\Distribute\include"  || exit /b 1
-mkdir "%libprefix%\Distribute\bin"
-copy /Y "%libprefix%\Release\bin\moai.exe" "%libprefix%\Distribute\bin\moai.exe"
-mkdir "%libprefix%\Distribute\src"
-copy /Y "%libprefix%\Release\src\*.*" "%libprefix%\Distribute\src\"
-
-if NOT EXIST "%rootpath%\bin\moai.exe" copy /Y "%libprefix%\Release\bin\moai.exe" "%rootpath%\bin\moai.exe"
-
-rd /S/Q "%libprefix%\Release"
-rd /S/Q "%libprefix%\Debug"
 
 echo "Build complete"
 exit /b 0
