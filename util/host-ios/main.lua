@@ -96,7 +96,7 @@ copyhostfiles = function()
 end
 
 copylib = function() 
-	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'libmoai' )
+	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'lib' )
 end
 
 linklib = function() 
