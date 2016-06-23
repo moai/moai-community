@@ -11,3 +11,8 @@ scripts/env-local.bat
 env-local.sh
 /bin/moai
 /moaisdk-*
+host-templates/ios/Moai Template/host-ios
+host-templates/ios/Moai Template/lib
+host-templates/osx/Moai Template/app/host-modules
+host-templates/osx/Moai Template/app/host-sdl
+host-templates/osx/Moai Template/lib

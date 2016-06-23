@@ -32,6 +32,8 @@
 		636B59551CA770AF00AAD4B0 /* libmoai-osx-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59401CA770AE00AAD4B0 /* libmoai-osx-zl-crypto.a */; };
 		636B59561CA770AF00AAD4B0 /* libmoai-osx-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59411CA770AE00AAD4B0 /* libmoai-osx-zl-vfs.a */; };
 		636B59571CA770AF00AAD4B0 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59421CA770AE00AAD4B0 /* libmoai-osx.a */; };
+		63A2ACD21D19478D008D5D59 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A2ACD11D19478D008D5D59 /* CoreVideo.framework */; };
+		63A2ACD41D194824008D5D59 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 63A2ACD31D194824008D5D59 /* SDLHost-osx.mm */; };
 		63E54A7919EE14DF00C7AC2F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63E54A7719EE14DF00C7AC2F /* InfoPlist.strings */; };
 		63E54A9619EE170700C7AC2F /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A8C19EE170700C7AC2F /* aku_modules.cpp */; };
 		63E54A9819EE170700C7AC2F /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A9319EE170700C7AC2F /* SDLHost.cpp */; };
@@ -85,6 +87,8 @@
 		636B59401CA770AE00AAD4B0 /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-osx-zl-crypto.a"; sourceTree = "<group>"; };
 		636B59411CA770AE00AAD4B0 /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-osx-zl-vfs.a"; sourceTree = "<group>"; };
 		636B59421CA770AE00AAD4B0 /* libmoai-osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-osx.a"; sourceTree = "<group>"; };
+		63A2ACD11D19478D008D5D59 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		63A2ACD31D194824008D5D59 /* SDLHost-osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "SDLHost-osx.mm"; sourceTree = "<group>"; };
 		63E54A6B19EE14DF00C7AC2F /* Moai Template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moai Template.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E54A6E19EE14DF00C7AC2F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		63E54A7119EE14DF00C7AC2F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -126,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63A2ACD21D19478D008D5D59 /* CoreVideo.framework in Frameworks */,
 				636B59431CA770AF00AAD4B0 /* libmoai-osx-3rdparty-core.a in Frameworks */,
 				636B59441CA770AF00AAD4B0 /* libmoai-osx-3rdparty-crypto.a in Frameworks */,
 				636B59451CA770AF00AAD4B0 /* libmoai-osx-3rdparty-sdl.a in Frameworks */,
@@ -228,6 +233,7 @@
 		63E54A6D19EE14DF00C7AC2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63A2ACD11D19478D008D5D59 /* CoreVideo.framework */,
 				63E54B0619EE1C4B00C7AC2F /* Carbon.framework */,
 				63E54B0319EE1B4D00C7AC2F /* IOKit.framework */,
 				63E54B0119EE1B1F00C7AC2F /* ForceFeedback.framework */,
@@ -297,6 +303,7 @@
 		63E54A9219EE170700C7AC2F /* host-sdl */ = {
 			isa = PBXGroup;
 			children = (
+				63A2ACD31D194824008D5D59 /* SDLHost-osx.mm */,
 				BD02B4171AB7B508006743DE /* SDLJoystick.cpp */,
 				BD02B4181AB7B508006743DE /* SDLJoystick.h */,
 				BD02B4191AB7B508006743DE /* SDLKeyCodeMapping.cpp */,
@@ -379,6 +386,7 @@
 				63E54A9619EE170700C7AC2F /* aku_modules.cpp in Sources */,
 				63E54A9819EE170700C7AC2F /* SDLHost.cpp in Sources */,
 				63E54A9919EE170700C7AC2F /* SDLHostMain.cpp in Sources */,
+				63A2ACD41D194824008D5D59 /* SDLHost-osx.mm in Sources */,
 				63157D6619FCB5A1009018A3 /* aku_modules_util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,7 +476,7 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(MOAI_SDK_HOME)/src\"",
 					"\"$(SRCROOT)/app\"",
-					"\"$(MOAI_SDK_HOME)/3rdparty/sdl2-2.0.0/include\"",
+					"\"$(MOAI_SDK_HOME)/3rdparty/sdl2-2.0.4/include\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/app/Moai Template-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -500,11 +508,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"AKU_WITH_SDL=1",
 					"$(inherited)",
+					"NDEBUG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(MOAI_SDK_HOME)/src\"",
 					"\"$(SRCROOT)/app\"",
-					"\"$(MOAI_SDK_HOME)/3rdparty/sdl2-2.0.0/include\"",
+					"\"$(MOAI_SDK_HOME)/3rdparty/sdl2-2.0.4/include\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/app/Moai Template-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
