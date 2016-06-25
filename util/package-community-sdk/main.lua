@@ -82,9 +82,9 @@ MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
 MOAIFileSystem.copy ( 'moai-sdk', OUTPUT_DIR )
 
 if MOAIEnvironment.osBrand == 'Windows' then
---	moaiexec ( 'prepare-sdk-windows.bat')
+	moaiexec ( 'prepare-sdk-windows.bat')
 else
---	moaiexec ( './prepare-sdk-osx.sh' )
+	moaiexec ( './prepare-sdk-osx.sh' )
 end
 
 for k, v in pairs ( PITO_FILES ) do

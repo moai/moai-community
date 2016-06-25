@@ -5,7 +5,8 @@ PITO_FILES = {
 	['util'] = true,
 	['scripts'] = true,
 	['lib/html'] = true,
-	['lib/android/libs'] = true
+	['lib/android/libs'] = true,
+	['lib/android/apk'] = true,
 }
 
 COMMON = {
@@ -20,9 +21,11 @@ COMMON = {
 
 
 OSX = {
+	['xcode'] = true
 }
 
 WINDOWS = {
+	['vs2015'] = true
 }
 
 LINUX = {
@@ -31,7 +34,7 @@ LINUX = {
 
 CLEAN_DIRS = {
   	['3rdparty/civetweb'] = true,
-		['3rdparty/sdl2-2.0.0/test'] = true,
+		['3rdparty/sdl2-2.0.4/test'] = true,
 		['ant/libmoai/libs'] = true,
 		['ant/libmoai/obj'] = true,
 }
