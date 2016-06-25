@@ -11,3 +11,6 @@ scripts/env-local.bat
 env-local.sh
 /bin/moai
 /moaisdk-*
+host-templates/windows/vs2015/host-sdl/
+host-templates/windows/vs2015/host-modules/
+host-templates/windows/vs2015/Debug/
