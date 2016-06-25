@@ -1,0 +1,3 @@
+[submodule "sdk/moai"]
+	path = sdk/moai
+url=https://github.com/halfnelson/moai-sdk
