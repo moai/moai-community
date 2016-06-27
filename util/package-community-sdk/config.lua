@@ -40,7 +40,7 @@ CLEAN_DIRS = {
 }
 
 CLEAN_DIRS_OSX = {
-	
+	  ['xcode/build'] = true
 }
 
 CLEAN_DIRS_WINDOWS = {
