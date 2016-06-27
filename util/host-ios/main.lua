@@ -67,9 +67,9 @@ copyhostfiles = function()
 
 
     
-  for  entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/ios/Moai Template', false, true) do
-    local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/ios/Moai Template' , entry )
-    if not config.USE_SYMLINK or entry ~= "libmoai" then
+  for  entry in util.iterateFiles(PITO_HOME..'host-templates/ios/Moai Template', false, true) do
+    local fullpath = string.format ( '%s/%s',PITO_HOME..'host-templates/ios/Moai Template' , entry )
+    if not config.USE_SYMLINK or entry ~= "lib" then
       print( string.format( '%s -> %s', fullpath, output..entry ))
       MOAIFileSystem.copy(fullpath, output..entry)
     end
@@ -96,13 +96,13 @@ copyhostfiles = function()
 end
 
 copylib = function() 
-	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'libmoai' )
+	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'lib' )
 end
 
 linklib = function() 
 	local isWindows = MOAIEnvironment.osBrand == 'Windows'
-	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'libmoai" "'..config.LIB_SOURCE..'"' 
-	                      or 'ln -s "'..config.LIB_SOURCE..'" "'..config.OUTPUT_DIR..'libmoai"'
+	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'lib" "'..config.LIB_SOURCE..'"' 
+	                      or 'ln -s "'..config.LIB_SOURCE..'" "'..config.OUTPUT_DIR..'lib"'
 	if os.execute(cmd) > 0 then
 	   print ("Error creating link, try running as administrator")
 	end
@@ -150,13 +150,18 @@ configureHost = function()
         ['(63D01EC01A38659C0097C3E8%C-name = )([^;]-)(;.-path = )([^;]-)(;.*)'] = "%1"..'"'..luafolder..'"'.."%3"..'"'..relativeLua..'"'.."%5",
         --our app name
         ['Moai Template'] = hostconfig['AppName'],
+        
+        ['%$%(MOAI_SDK_HOME%)'] = MOAIFileSystem.getAbsoluteDirectoryPath(MOAI_SDK_HOME),
+        ['%.%./%.%./%.%./sdk/moai'] = MOAIFileSystem.getAbsoluteDirectoryPath(MOAI_SDK_HOME)
+        
+        
         },
-        [ util.wrap(pairs, projectfiles) ] = {
+  [ util.wrap(pairs, projectfiles) ] = {
         ['Moai Template'] = hostconfig['AppName'],
         },
         [ output..'main.lua'] = {
         ['setWorkingDirectory%(.-%)'] = 'setWorkingDirectory("'..luafolder..'")'
-      },
+        },
     [ output..'run.sh' ] = {
       ['SCHEME_NAME'] = hostconfig['AppName'], 
       },

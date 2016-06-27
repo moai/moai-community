@@ -8,9 +8,9 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai )
 
-
+set(MOAI_ROOT ${MOAI_SDK_HOME} )
 # Setup the "MOAI_ROOT" variable
-get_filename_component(MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
+get_filename_component(MOAI_ROOT "${MOAI_ROOT}" ABSOLUTE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules")
 
 

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0D6418DE-A02D-4F97-A191-3B19F7828818}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Moai</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;_CONSOLE;AKU_WITH_SDL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;.\sdk\src;.\sdk\3rdparty\sdl2-2.0.4\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>.\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <AdditionalDependencies>box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;libcrypto.lib;libcurl.lib;libjpg.lib;libogg.lib;libpng.lib;libpvr.lib;libssl.lib;libtess.lib;libvorbis.lib;libwebp.lib;lua-lib-5.1.lib;luaext.lib;moai-lib-box2d.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-luaext.lib;moai-lib-sdl.lib;moai-lib-sim.lib;moai-lib-untz.lib;moai-lib-util.lib;mongoose.lib;sdl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;tlsf.lib;untz.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;zl-lib-vfs.lib;zlib.lib;ws2_32.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;glu32.lib;opengl32.lib;iphlpapi.lib;dxguid.lib;strmiids.lib;dsound.lib;psapi.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;AKU_WITH_SDL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;.\sdk\src;.\sdk\3rdparty\sdl2-2.0.4\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>.\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>MSVCRTD</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;libcrypto.lib;libcurl.lib;libjpg.lib;libogg.lib;libpng.lib;libpvr.lib;libssl.lib;libtess.lib;libvorbis.lib;libwebp.lib;lua-lib-5.1.lib;luaext.lib;moai-lib-box2d.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-luaext.lib;moai-lib-sdl.lib;moai-lib-sim.lib;moai-lib-untz.lib;moai-lib-util.lib;mongoose.lib;sdl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;tlsf.lib;untz.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;zl-lib-vfs.lib;zlib.lib;ws2_32.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;glu32.lib;opengl32.lib;iphlpapi.lib;dxguid.lib;strmiids.lib;dsound.lib;psapi.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="host-modules\aku_modules.cpp" />
+    <ClCompile Include="host-modules\aku_modules_util.cpp" />
+    <ClCompile Include="host-sdl\SDLHost.cpp" />
+    <ClCompile Include="host-sdl\SDLHostMain.cpp" />
+    <ClCompile Include="host-sdl\SDLJoystick.cpp" />
+    <ClCompile Include="host-sdl\SDLKeyCodeMapping.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="host-modules\aku_modules.h" />
+    <ClInclude Include="host-modules\aku_modules_config.h" />
+    <ClInclude Include="host-modules\aku_modules_util.h" />
+    <ClInclude Include="host-sdl\SDLHost.h" />
+    <ClInclude Include="host-sdl\SDLJoystick.h" />
+    <ClInclude Include="host-sdl\SDLKeyCodeMapping.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Moai.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="appicon.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

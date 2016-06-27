@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 2.8.5)
 
 project(host-sdl)
 set (LUA_LIB_DIR  "")
-set (MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../..")
+set(MOAI_ROOT ${MOAI_SDK_HOME} )
+# Setup the "MOAI_ROOT" variable
+get_filename_component(MOAI_ROOT "${MOAI_ROOT}" ABSOLUTE)
 #normalizes slashes to forward slashes for windows
 if (LIB_PATH)
    get_filename_component(LIB_PATH ${LIB_PATH} ABSOLUTE)
