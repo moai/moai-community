@@ -343,7 +343,7 @@ MoaiJS.prototype.getEmscripten = function() {
 	var Module = this.emscripten;
 	this.RefreshContext = Module.cwrap('RefreshContext','number',null);
 	this.AKURunString = function(str) {
-    Module.cwrap('AKULoadFuncFromString','number',['string'])(str);
+    Module.cwrap('AKULoadFuncFromString','number',['string','number','string'])(str,str.length,'AKURunString');
     Module.cwrap('AKUCallFunc','number',null)();
   } 
   this.AKURunScript = function(str) {

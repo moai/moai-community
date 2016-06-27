@@ -24,7 +24,7 @@ file ( GLOB MOAI_UTIL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_S
 
 add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
 
-target_link_libraries ( moai-util moai-core zlcore ${LUA_LIB} )
+target_link_libraries ( moai-util moai-core zlcore kissfft ${LUA_LIB} )
 
 
 target_include_directories (moai-util PUBLIC 

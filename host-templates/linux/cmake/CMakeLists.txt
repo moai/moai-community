@@ -16,8 +16,8 @@ endif(LIB_PATH)
 find_package ( OpenGL REQUIRED )
 
 set ( VFS_INCLUDE "-I${LIB_PATH}/include -include ${LIB_PATH}/include/zl-vfs/zl_replace.h")
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE ${VFS_INCLUDE}" )
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DPOSIX2 ${VFS_INCLUDE}" )
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE ${VFS_INCLUDE} -DAKU_WITH_SDL=1" )
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DPOSIX2 ${VFS_INCLUDE} -DAKU_WITH_SDL=1" )
 
 #link lib moai
 include(${LIB_PATH}/cmake/libmoai.cmake)
@@ -43,7 +43,7 @@ if (NOT (XCB_XCB_FOUND AND XCB_RANDR_FOUND AND XCB_UTIL_FOUND))
 endif (NOT (XCB_XCB_FOUND AND XCB_RANDR_FOUND AND XCB_UTIL_FOUND))
 
 find_package(X11)
-   
+
 FIND_LIBRARY(X11_Xxf86vm_LIB Xxf86vm ${X11_LIB_SEARCH_PATH})
 FIND_LIBRARY(XI_LIBRARY Xi ${X11_LIB_SEARCH_PATH})
 MARK_AS_ADVANCED(X11_Xxf86vm_LIB XI_LIBRARY)
@@ -60,14 +60,14 @@ file ( GLOB HOST_SDL_SRC "${HOST_ROOT}/host-sdl/*.cpp" "${HOST_ROOT}/host-sdl/*.
 
 add_executable ( moai ${HOST_SDL_SRC} )
 
-target_link_libraries ( moai 
+target_link_libraries ( moai
   host-modules
   moai-sim
   moai-util
   moai-core
   zlcore
   SDL2-static
-  pthread 
+  pthread
   rt
  ${XI_LIBRARY}
   ${OPENGL_LIBRARIES}

@@ -69,8 +69,8 @@ copyhostfiles = function()
 
 
     
-	for  entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/osx/Moai Template', false, true) do
-			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/osx/Moai Template' , entry )
+	for  entry in util.iterateFiles(PITO_HOME..'host-templates/osx/Moai Template', false, true) do
+			local fullpath = string.format ( '%s/%s',PITO_HOME..'host-templates/osx/Moai Template' , entry )
       if not config.USE_SYMLINK or entry ~= "lib" then
         print( string.format( '%s -> %s', fullpath, output..entry ))
         MOAIFileSystem.copy(fullpath, output..entry)
@@ -146,7 +146,9 @@ configureHost = function()
         --our lua path
         ['(63157D5E19FCB4F0009018A3%C-name = )([^;]-)(;.-path = )([^;]-)(;.*)'] = "%1"..luafolder.."%3"..relativeLua.."%5",
         --our app name
-        ['Moai Template'] = hostconfig['AppName']
+        ['Moai Template'] = hostconfig['AppName'],
+        ['%$%(MOAI_SDK_HOME%)'] = MOAIFileSystem.getAbsoluteDirectoryPath(MOAI_SDK_HOME)
+        
     },
     [ util.wrap(pairs, projectfiles) ] = {
         ['Moai Template'] = hostconfig['AppName']

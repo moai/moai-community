@@ -12,6 +12,7 @@ set ( ZLCORE_INCLUDES
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/3rdparty/"
   "${MOAI_ROOT}/3rdparty/ooid-0.99/"
+  ${LUA_HEADERS}
  )
 
 # Use all cpp files in directory as source code

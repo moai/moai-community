@@ -14,16 +14,16 @@ add_library ( host-modules STATIC ${HOST_MODULES_SRC} )
 set_target_properties( host-modules PROPERTIES FOLDER Modules )
 target_include_directories(host-modules PUBLIC ${HOST_ROOT})
 
-  target_link_libraries ( host-modules 
-  						  moai-box2d  
-  						  moai-untz  
-  						  moai-http-client 
+  target_link_libraries ( host-modules
+  						  moai-box2d
+                moai-sdl
+  						  moai-untz
+  						  moai-http-client
                 moai-image-pvr
                 moai-image-png
                 moai-image-jpg
                 moai-image-webp
-  						  moai-luaext 
+  						  moai-luaext
   						  moai-core
                 moai-crypto
                  )
-
