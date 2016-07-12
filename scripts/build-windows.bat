@@ -28,6 +28,7 @@ msbuild %projpath%\moai.sln /verbosity:minimal /t:Moai\moai /p:Configuration=Deb
 
 robocopy "%projpath%\bin\win32\Debug" "%libprefix%\Debug" /MIR 
 
+if not exist "%rootpath%\bin\moai.exe" copy "%projpath%\bin\win32\debug\moai.exe" "%rootpath%\bin\moai.exe"
 
 echo "Build complete"
 exit /b 0

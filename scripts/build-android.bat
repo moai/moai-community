@@ -10,7 +10,11 @@ if "%MOAI_SDK_HOME%"=="" echo "You need to set MOAI_SDK_HOME to your moai sdk fo
 rem ----- Build libmoai using sdk methods -----
 
 pushd "%MOAI_SDK_HOME%\ant"
+
+if not exist libmoai\jni\libraries.mk call libmoai-clean.bat
+
 if "%1"=="--clean" call libmoai-clean.bat
+
 echo "Builing libmoai"
 call libmoai-build.bat || echo "Android NDK build failed" && exit /b 1
 

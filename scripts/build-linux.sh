@@ -54,7 +54,9 @@ $PITO_ROOT/cmake/hosts/host-linux-sdl
 
 cmake --build . --target install -- -j$cores
 
-cp $libprefix/bin/moai $PITO_ROOT/bin/moai
+if [ ! -e "$PITO_ROOT/bin/moai" ]; then
+   cp $libprefix/bin/moai $PITO_ROOT/bin/moai
+fi
 
 popd
 exit 0
