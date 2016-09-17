@@ -38,7 +38,7 @@ add_library ( moaishared SHARED
 set_target_properties( moaishared PROPERTIES  SUFFIX ".bc" )
 
 
-set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onChar','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKULoadFuncFromString','_AKULoadFuncFromFile','_AKUCallFunc','_RestoreFile','_AKUInitializeUntz','_MoaiOpenWindowFunc','_MoaiSaveFunc']" )
+set(EXPORTED_FUNCTIONS "['_CallStringFunc','_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onChar','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKULoadFuncFromString','_AKULoadFuncFromFile','_AKUCallFunc','_RestoreFile','_AKUInitializeUntz','_MoaiOpenWindowFunc','_MoaiSaveFunc','FS_mount','FS_unmount' ]" )
 
 #--closure 0 --minify 0
 add_custom_target( moaijs
@@ -47,6 +47,7 @@ add_custom_target( moaijs
                     --post-js ${CMAKE_CURRENT_SOURCE_DIR}/libmoai-post.js
                     --memory-init-file 0
 					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" 
+          -s EXTRA_EXPORTED_RUNTIME_METHODS="['FS_mount','FS_unmount']"
           -s INVOKE_RUN=0 $<TARGET_FILE:moaishared> -o ${CMAKE_CURRENT_BINARY_DIR}/moaijs.js
 		 
                   )
