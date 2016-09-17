@@ -4,30 +4,11 @@ set -e
 
 cd `dirname $0`/..
 
-export PATH=$PATH:$(pwd)/util
+export PATH=$PATH:$(pwd)/bin
 
-echo "Building linux libs"
 
-./bin/build-linux.sh
+./scripts/build-linux.sh || exit 1
 
-echo "Linux Libs complete"
+./scripts/build-android.sh || exit 1
 
-echo "Creating linux host"
-
-pito host-linux
-
-echo "Linux host Complete"
-
-echo "Building android libs"
-
-./bin/build-android.sh
-
-echo "Android libs complete"
-
-echo "Creating android host"
-
-pito host-android-gradle
-
-echo "Android host Complete"
-
-echo "All linux compatible hosts and libs have been built"
+./scripts/build-html.sh || exit 1

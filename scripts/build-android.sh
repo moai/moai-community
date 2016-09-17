@@ -14,6 +14,10 @@ if [ "$1" == "--clean" ]; then
   ./libmoai-clean.sh
 fi
 
+if [ ! -e "$MOAI_SDK_HOME/ant/libmoai/jni/libraries.mk" ]; then
+   ./libmoai-clean.sh
+fi
+
 ./libmoai-build.sh || ( echo "Android NDK build failed" && exit 1)
 
 mkdir -p $PITO_ROOT/lib/android/libs
