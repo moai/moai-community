@@ -1,4 +1,3 @@
-[submodule "moai-dev"]
-	path = moai-dev
-	url = https://github.com/moai/moai-dev
-	branch = develop
+[submodule "sdk/moai"]
+	path = sdk/moai
+url=https://github.com/moai/moai-dev

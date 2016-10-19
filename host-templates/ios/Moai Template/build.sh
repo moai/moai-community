@@ -1,2 +1,2 @@
 #!/bin/bash
-xcodebuild -configuration Debug -sdk iphonesimulator build
+xcodebuild -configuration Debug -sdk iphonesimulator PLATFORM_NAME=iphonesimulator build

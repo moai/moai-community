@@ -4,7 +4,9 @@ project(host-html)
 
 #build shared lib (libmoaishared.so) and moaijs.js
 set (LUA_LIB_DIR  "")
-set (MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../..")
+set(MOAI_ROOT ${MOAI_SDK_HOME} )
+# Setup the "MOAI_ROOT" variable
+get_filename_component(MOAI_ROOT "${MOAI_ROOT}" ABSOLUTE)
 set (HOST_ROOT "${MOAI_ROOT}/src" )
 get_filename_component(MY_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/../../cmake-modules" ABSOLUTE) 
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${MY_SOURCE}")
@@ -36,7 +38,7 @@ add_library ( moaishared SHARED
 set_target_properties( moaishared PROPERTIES  SUFFIX ".bc" )
 
 
-set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onChar','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKULoadFuncFromString','_AKULoadFuncFromFile','_AKUCallFunc','_RestoreFile','_AKUInitializeUntz','_MoaiOpenWindowFunc','_MoaiSaveFunc']" )
+set(EXPORTED_FUNCTIONS "['_CallStringFunc','_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onChar','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKULoadFuncFromString','_AKULoadFuncFromFile','_AKUCallFunc','_RestoreFile','_AKUInitializeUntz','_MoaiOpenWindowFunc','_MoaiSaveFunc','FS_mount','FS_unmount' ]" )
 
 #--closure 0 --minify 0
 add_custom_target( moaijs
@@ -45,6 +47,7 @@ add_custom_target( moaijs
                     --post-js ${CMAKE_CURRENT_SOURCE_DIR}/libmoai-post.js
                     --memory-init-file 0
 					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" 
+          -s EXTRA_EXPORTED_RUNTIME_METHODS="['FS_mount','FS_unmount']"
           -s INVOKE_RUN=0 $<TARGET_FILE:moaishared> -o ${CMAKE_CURRENT_BINARY_DIR}/moaijs.js
 		 
                   )
@@ -56,6 +59,7 @@ target_link_libraries ( moaishared
   moai-sim
   moai-util
   moai-core
+  moai-util
   zlcore
 )
 

@@ -5,7 +5,10 @@ get_filename_component(MY_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/../../cmake-module
 set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${MY_SOURCE}")
 
 set (LUA_LIB_DIR  "")
-set (MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../..")
+
+set(MOAI_ROOT ${MOAI_SDK_HOME} )
+# Setup the "MOAI_ROOT" variable
+get_filename_component(MOAI_ROOT "${MOAI_ROOT}" ABSOLUTE)
 
 
 #set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX " )
@@ -20,7 +23,7 @@ else (HOST_ROOT)
   set (HOST_ROOT ${MOAI_ROOT}/src)
 endif(HOST_ROOT)
 
-  
+
 
 include(platform-linux)
 include(platform-common)
@@ -52,7 +55,7 @@ if (NOT (XCB_XCB_FOUND AND XCB_RANDR_FOUND AND XCB_UTIL_FOUND))
 endif (NOT (XCB_XCB_FOUND AND XCB_RANDR_FOUND AND XCB_UTIL_FOUND))
 
 find_package(X11)
-   
+
 FIND_LIBRARY(X11_Xxf86vm_LIB Xxf86vm ${X11_LIB_SEARCH_PATH})
 FIND_LIBRARY(XI_LIBRARY Xi ${X11_LIB_SEARCH_PATH})
 MARK_AS_ADVANCED(X11_Xxf86vm_LIB XI_LIBRARY)
@@ -73,7 +76,7 @@ file ( GLOB HOST_SDL_SRC "${HOST_ROOT}/host-sdl/*.cpp" "${HOST_ROOT}/host-sdl/*.
 add_executable ( moai ${HOST_SDL_SRC} )
 install(TARGETS moai DESTINATION bin)
 
-target_link_libraries ( moai 
+target_link_libraries ( moai
   host-modules
   moai-sim
   moai-util
@@ -81,7 +84,7 @@ target_link_libraries ( moai
   moai-sdl
   zlcore
   SDL2-static
-  pthread 
+  pthread
   rt
   ${XI_LIBRARY}
   ${OPENGL_LIBRARIES}
@@ -89,7 +92,5 @@ target_link_libraries ( moai
   ${XCB_XCB_LIBRARIES}
   ${XCB_RANDR_LIBRARIES}
   ${XCB_UTIL_LIBRARIES}
-  
+
 )
-
-

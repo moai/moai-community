@@ -24,7 +24,7 @@ local configFile = false
 local config = {}
 
 config.OUTPUT_DIR                       = INVOKE_DIR..'hosts/html/'
-config.LIB_SOURCE                      = MOAI_SDK_HOME..'lib/html'
+config.LIB_SOURCE                       = PITO_HOME..'lib/html'
 config.USE_SYMLINK                      = false
 
 MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
@@ -67,8 +67,8 @@ copyhostfiles = function()
 	local output = config.OUTPUT_DIR
 	print("Creating ",output)
     MOAIFileSystem.affirmPath(output)
-	for  entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/html', false, true) do
-			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/html' , entry )
+	for  entry in util.iterateFiles(PITO_HOME..'host-templates/html', false, true) do
+			local fullpath = string.format ( '%s/%s',PITO_HOME..'host-templates/html' , entry )
 			print( string.format( '%s -> %s', fullpath, output..entry ))
 			MOAIFileSystem.copy(fullpath, output..entry)
 	end

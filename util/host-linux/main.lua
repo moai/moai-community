@@ -18,7 +18,7 @@ end
 local config = {}
 
 config.OUTPUT_DIR                       = INVOKE_DIR..'hosts/linux/'
-config.LIB_SOURCE                      = MOAI_SDK_HOME..'lib/linux'
+config.LIB_SOURCE                      = PITO_HOME..'lib/linux'
 config.USE_SYMLINK                      = false
 
 MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
@@ -43,19 +43,19 @@ end
 -- actions
 --==============================================================
 
-local copyhostfiles 
+local copyhostfiles
 local copylib
 local linklib
 
-copyhostfiles = function() 
+copyhostfiles = function()
 	local output = config.OUTPUT_DIR
 	print("Creating ",output)
     MOAIFileSystem.affirmPath(output)
 
 
-    
-	for  entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/linux', false, true) do
-			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/linux' , entry )
+
+	for  entry in util.iterateFiles(PITO_HOME..'host-templates/linux', false, true) do
+			local fullpath = string.format ( '%s/%s',PITO_HOME..'host-templates/linux' , entry )
 			print( string.format( '%s -> %s', fullpath, output..entry ))
 			MOAIFileSystem.copy(fullpath, output..entry)
 	end
@@ -72,20 +72,20 @@ copyhostfiles = function()
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios_config.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios.mm')
-    
+
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android_config.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.cpp')
 
 end
 
-copylib = function() 
+copylib = function()
 	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'lib' )
 end
 
-linklib = function() 
+linklib = function()
 	local isWindows = MOAIEnvironment.osBrand == 'Windows'
-	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'lib" "'..config.LIB_SOURCE..'"' 
+	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'lib" "'..config.LIB_SOURCE..'"'
 	                      or 'ln -s "'..config.LIB_SOURCE..'" "'..config.OUTPUT_DIR..'lib"'
 	if os.execute(cmd) > 0 then
 	   print ("Error creating link, try running as administrator")
