@@ -11,6 +11,7 @@ endif ( BUILD_ANDROID )
 
 include_directories ( 
   ${MOAI_LUAEXT_INCLUDES}
+  ${LUA_HEADERS}
 )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-luaext/" )

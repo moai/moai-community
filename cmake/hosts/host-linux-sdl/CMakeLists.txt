@@ -86,11 +86,12 @@ target_link_libraries ( moai
   SDL2-static
   pthread
   rt
+  dl
   ${XI_LIBRARY}
   ${OPENGL_LIBRARIES}
   ${X11_Xxf86vm_LIB}
   ${XCB_XCB_LIBRARIES}
   ${XCB_RANDR_LIBRARIES}
   ${XCB_UTIL_LIBRARIES}
-
+ 
 )
