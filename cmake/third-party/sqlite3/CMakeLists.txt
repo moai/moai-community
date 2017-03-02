@@ -16,6 +16,9 @@ set ( SQLITE3_HEADERS
 )
 
 add_library ( sqlite3 STATIC ${SQLITE3_SOURCES} ${SQLITE3_HEADERS} )
+if (BUILD_LINUX)
+target_link_libraries(sqlite3 dl)
+endif()
 
 target_include_directories ( sqlite3 PUBLIC "$<BUILD_INTERFACE:${SQLITE3_INCLUDES}>" )
 set_target_properties( sqlite3 PROPERTIES FOLDER Third-Party )
