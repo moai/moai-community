@@ -2,7 +2,10 @@
 
 The community SDK bundles a tested version of libmoai and a suite of tools to allow you to quickly create moai projects and export to multiple platforms.
 
-Start by grabbing the latest Community SDK with `git clone https://github.com/moai/moai-community --recursive`
+Start by grabbing the latest Community SDK with
+```bash
+git clone https://github.com/moai/moai-community --recursive
+```
 
 ##Building Moai
 
@@ -53,12 +56,20 @@ From the SDK/scripts directory run `env-win.bat` or `source env-osx.sh` or
 `source env-linux.sh` to setup your environment.
 
 To build the library for each platform run the corresponding `build-xxxxx` file in the script folder:
+Note start with your current platform before building mobile or html libs.
 
 * For Windows: `build-windows`, `build-android`, `build-html`
 * For Linux: `build-linux`, `build-android`, `build-html`
 * For OSX: `build-osx`, `build-ios`, `build-android`, `build-html`
 
 `build-windows`, `build-osx`, `build-linux` also build the basic SDL host for the platform as well as the libraries
+
+if these cause problems it might be because you didn't clone with `--recursive`.  No problems, just run 
+
+```bash
+git submodule update --init --recursive
+```
+from the root of the checkout and try again.
 
 ###Create A Project
 
