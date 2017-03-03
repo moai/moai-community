@@ -15,7 +15,6 @@ endif(BUILD_ANDROID)
 
 add_subdirectory ( box2d )
 add_subdirectory ( contrib )
-add_subdirectory ( crypto )
 add_subdirectory ( curl )
 
 if (BUILD_IOS OR BUILD_ANDROID)
@@ -32,9 +31,6 @@ set (LUA_LIB "")
 set (LUA_LIB_DIR "")
 #Lua or LuaJit?
 if (MOAI_LUAJIT)
-#	if ( BUILD_IOS )#
-#		set ( LUAJIT_DISABLE_JIT CACHE bool "Disable JIT." OFF )
-#	endif (BUILD_IOS )
 	add_subdirectory( luajit )
 else()
 	add_subdirectory ( lua )
@@ -44,6 +40,7 @@ set (LUA_LIB ${LUA_LIB} PARENT_SCOPE)
 set (LUA_LIB_DIR ${LUA_LIB_DIR} PARENT_SCOPE)
 
 add_subdirectory ( luaext )
+add_subdirectory ( mbedtls )
 add_subdirectory ( mongoose )
 add_subdirectory ( ogg )
 add_subdirectory ( png )
@@ -51,7 +48,7 @@ add_subdirectory ( pvr )
 add_subdirectory ( sfmt )
 add_subdirectory ( sqlite3 )
 
-add_subdirectory ( ssl )
+
 add_subdirectory ( tess )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
@@ -61,15 +58,7 @@ add_subdirectory ( zlib )
 
 #SDL is for pc only
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
-  #set(DIRECTX OFF CACHE BOOL "SDL DirectX")
-  #set (SDL_SHARED OFF)
-  #set(SDL_SHARED_ENABLED_BY_DEFAULT OFF)
-  
-  add_subdirectory(sdl2)
- 
-  #if (BUILD_LINUX OR BUILD_WINDOWS)
-    #set(X11_SHARED OFF CACHE BOOL "ENABLE X11_SHARED") 
-  #endif (BUILD_LINUX OR BUILD_WINDOWS)
+  add_subdirectory( sdl2 )
   add_subdirectory ( glew )
 endif (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
 

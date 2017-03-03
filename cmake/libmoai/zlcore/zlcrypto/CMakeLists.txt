@@ -26,7 +26,7 @@ set_target_properties(zlcrypto PROPERTIES FOLDER Core)
 
 
 target_include_directories(zlcrypto PRIVATE ${ZLCRYPTO_INCLUDES})
-target_link_libraries( zlcrypto crypto zlcore)
+target_link_libraries( zlcrypto mbedtls zlcore)
 
 
 
