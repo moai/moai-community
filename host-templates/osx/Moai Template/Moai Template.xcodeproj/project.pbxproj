@@ -10,9 +10,9 @@
 		63157D5C19FCB407009018A3 /* bootstrap.lua in Resources */ = {isa = PBXBuildFile; fileRef = 63157D5B19FCB407009018A3 /* bootstrap.lua */; };
 		63157D5F19FCB4F0009018A3 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 63157D5E19FCB4F0009018A3 /* src */; };
 		63157D6619FCB5A1009018A3 /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63157D6419FCB5A1009018A3 /* aku_modules_util.cpp */; };
+		634E066B1E6D6ADE00F436C5 /* libmoai-osx-3rdparty-mbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634E066A1E6D6ADE00F436C5 /* libmoai-osx-3rdparty-mbedtls.a */; };
 		6350149A1A162880000E237F /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 635014991A162880000E237F /* Icon-120.png */; };
 		636B59431CA770AF00AAD4B0 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B592E1CA770AE00AAD4B0 /* libmoai-osx-3rdparty-core.a */; };
-		636B59441CA770AF00AAD4B0 /* libmoai-osx-3rdparty-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B592F1CA770AE00AAD4B0 /* libmoai-osx-3rdparty-crypto.a */; };
 		636B59451CA770AF00AAD4B0 /* libmoai-osx-3rdparty-sdl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59301CA770AE00AAD4B0 /* libmoai-osx-3rdparty-sdl.a */; };
 		636B59461CA770AF00AAD4B0 /* libmoai-osx-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59311CA770AE00AAD4B0 /* libmoai-osx-apple.a */; };
 		636B59471CA770AF00AAD4B0 /* libmoai-osx-audio-sampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59321CA770AE00AAD4B0 /* libmoai-osx-audio-sampler.a */; };
@@ -65,6 +65,7 @@
 		63157D5E19FCB4F0009018A3 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../src; sourceTree = "<group>"; };
 		63157D6419FCB5A1009018A3 /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aku_modules_util.cpp; sourceTree = "<group>"; };
 		63157D6519FCB5A1009018A3 /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aku_modules_util.h; sourceTree = "<group>"; };
+		634E066A1E6D6ADE00F436C5 /* libmoai-osx-3rdparty-mbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-mbedtls.a"; path = "lib/libmoai-osx-3rdparty-mbedtls.a"; sourceTree = "<group>"; };
 		635014991A162880000E237F /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
 		636B592E1CA770AE00AAD4B0 /* libmoai-osx-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-osx-3rdparty-core.a"; sourceTree = "<group>"; };
 		636B592F1CA770AE00AAD4B0 /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-osx-3rdparty-crypto.a"; sourceTree = "<group>"; };
@@ -130,9 +131,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				634E066B1E6D6ADE00F436C5 /* libmoai-osx-3rdparty-mbedtls.a in Frameworks */,
 				63A2ACD21D19478D008D5D59 /* CoreVideo.framework in Frameworks */,
 				636B59431CA770AF00AAD4B0 /* libmoai-osx-3rdparty-core.a in Frameworks */,
-				636B59441CA770AF00AAD4B0 /* libmoai-osx-3rdparty-crypto.a in Frameworks */,
 				636B59451CA770AF00AAD4B0 /* libmoai-osx-3rdparty-sdl.a in Frameworks */,
 				636B59461CA770AF00AAD4B0 /* libmoai-osx-apple.a in Frameworks */,
 				636B59471CA770AF00AAD4B0 /* libmoai-osx-audio-sampler.a in Frameworks */,
@@ -233,6 +234,7 @@
 		63E54A6D19EE14DF00C7AC2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				634E066A1E6D6ADE00F436C5 /* libmoai-osx-3rdparty-mbedtls.a */,
 				63A2ACD11D19478D008D5D59 /* CoreVideo.framework */,
 				63E54B0619EE1C4B00C7AC2F /* Carbon.framework */,
 				63E54B0319EE1B4D00C7AC2F /* IOKit.framework */,
