@@ -1,6 +1,6 @@
 @echo off
 setlocal enableextensions
-
+call "%~dp0%\env-win.bat"
 rem Prerequisites
 
 if "%MOAI_SDK_HOME%"=="" echo "Could not determine location of MOAI SDK, please set MOAI_SDK_HOME" && goto ERROR

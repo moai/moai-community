@@ -1,10 +1,10 @@
 @echo off
 setlocal enableextensions
-
+call "%~dp0%\env-win.bat"
 rem ----- Requirements Check -----
 set "PITO_HOME=%~dp0..\"
 
-if "%ANDROID_NDK%"=="" echo "You need to set ANDROID_NDK to your ndk path" && exit /b 1
+if "%ANDROID_NDK%"=="" echo "You need to set ANDROID_NDK to your ndk path try using env-win.bat and env-local.bat in scripts" && exit /b 1
 if "%MOAI_SDK_HOME%"=="" echo "You need to set MOAI_SDK_HOME to your moai sdk folder" && exit /b 1
 
 rem ----- Build libmoai using sdk methods -----
