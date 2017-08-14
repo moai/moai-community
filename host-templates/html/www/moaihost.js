@@ -933,7 +933,7 @@ MoaiPlayer.prototype.isSupported = function() {
     catch (x) { gl = null; }
 
     if (gl === null) {
-        try { gl = canvas.getContext("experimental-webgl");}
+        try { gl = testCanvas.getContext("experimental-webgl");}
         catch (x) { gl = null; }
     }
 
