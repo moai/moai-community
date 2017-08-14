@@ -54,6 +54,7 @@ rem Install into lib
 
 mkdir "%PITOROOT%\lib\html"
 copy /y moaijs.js "%PITOROOT%\lib\html\moaijs.js"
+copy /y moaijs.wasm "%PITOROOT%\lib\html\moaijs.wasm"
 
 goto END
 

@@ -59,4 +59,5 @@ fi
 
 mkdir -p ${PITO_ROOT}/lib/html
 cp moaijs.js ${PITO_ROOT}/lib/html/moaijs.js
+cp moaijs.wasm ${PITO_ROOT}/lib/html/moaijs.wasm
 

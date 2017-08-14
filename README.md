@@ -37,7 +37,7 @@ To build/rebuild the moai libraries ensure you have the prequisites for your tar
 * [Android NDK r10e+](http://developer.android.com/ndk/downloads/index.html)
 
 ####HTML/JS Requirements
-* [Emscripten SDK 1.25+](http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html) 
+* [Emscripten SDK 1.37+](http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html) 
 * [CMake 3.1+](https://cmake.org/download)
 * _(windows only)_ [mingw32-make](http://tdm-gcc.tdragon.net/download)
 

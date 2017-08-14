@@ -311,7 +311,7 @@ function doLoadRom(emscripten, romUrl, romProgress, fileProgress ) {
 var MoaiJS = (function() {
 
 
-function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError, onPrint, onResolutionChange ) {
+function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError, onPrint, onResolutionChange, wasmfile ) {
 	this.canvas = canvas;
 	this.onTitleChange = onTitleChange;
 	this.onStatusChange = onStatusChange;
@@ -321,12 +321,62 @@ function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError, on
 	this.emscripten = null;
 	this.total_memory = total_memory;
 	this.loadedFileSystems = []; //array of filesystem urls to load
+    this.wasmfile = wasmfile || "moaijs.wasm"; //allow override of wasm location incase it is in shared folder
+    
 
     console.log("MoaiJS Init");
 }
 
+MoaiJS.prototype.instantiateWasm = function(info, receiveInstance) {
+    return 
+    fetch(this.wasmfile, { credentials: 'same-origin' })
+    .then(function(response) {
+        if (!response['ok']) {
+          throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+        }
+        return response['arrayBuffer']();
+    })
+    .then(function(binary) {
+      return WebAssembly.instantiate(binary, info)
+    })
+    .then(function(output) {
+      receiveInstance(output['instance']);
+    })
+    .catch(function(reason) {
+      console.err('failed to asynchronously prepare wasm: ' + reason);
+    });
+}
+
 MoaiJS.prototype.getEmscripten = function() {
-	if (this.emscripten) return this.emscripten;
+    if (this.emscripten) return this.emscripten;
+    
+    var wasmLoaded = D.defer(); 
+    var me = this;
+    var instantiateWasm = function(info, receiveInstance) {
+        return fetch(me.wasmfile, { credentials: 'same-origin' })
+        .then(function(response) {
+            if (!response['ok']) {
+                throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+            }
+            return response['arrayBuffer']();
+        })
+        .then(function(binary) {
+            return WebAssembly.instantiate(binary, info)
+        })
+        .then(function(output) {
+            receiveInstance(output['instance']);
+            wasmLoaded.resolve()
+        })
+        .catch(function(reason) {
+            console.err('failed to asynchronously prepare wasm: ' + reason);
+            wasmLoaded.reject('failed to asynchronously prepare wasm: ' + reason);
+        });
+    }
+
+
+
+
+
     var Opts = { //our required emscripten settings
     		canvas: this.canvas,
     		setStatus: this.onStatusChange,
@@ -334,22 +384,25 @@ MoaiJS.prototype.getEmscripten = function() {
     		printErr: this.onError,
     		noExitRuntime: true,
     		totalDependencies: 0,
-    		TOTAL_MEMORY: this.total_memory
+          //  TOTAL_MEMORY: this.total_memory,
+         //   wasmBinaryFile: this.wasmfile,
+            instantiateWasm: instantiateWasm
+
     	};
 	console.log("MoaiJS Emscripten Init");
-	this.emscripten = window.CreateMoaiRuntime(Opts);
+	var em = window.CreateMoaiRuntime(Opts);
 
 	//bring our emscripten host functions into the normal javascript world
-	var Module = this.emscripten;
+	var Module = em;
 	this.RefreshContext = Module.cwrap('RefreshContext','number',null);
 	this.AKURunString = function(str) {
-    Module.cwrap('AKULoadFuncFromString','number',['string','number','string'])(str,str.length,'AKURunString');
-    Module.cwrap('AKUCallFunc','number',null)();
-  } 
-  this.AKURunScript = function(str) {
-    Module.cwrap('AKULoadFuncFromFile','number',['string'])(str);
-    Module.cwrap('AKUCallFunc','number',null)();
-  } 
+        Module.cwrap('AKULoadFuncFromString','number',['string','number','string'])(str,str.length,'AKURunString');
+        Module.cwrap('AKUCallFunc','number',null)();
+    } 
+    this.AKURunScript = function(str) {
+        Module.cwrap('AKULoadFuncFromFile','number',['string'])(str);
+        Module.cwrap('AKUCallFunc','number',null)();
+    } 
   
 
 	this.AKUSetWorkingDirectory = Module.cwrap('AKUSetWorkingDirectory','number',['string']);
@@ -364,8 +417,12 @@ MoaiJS.prototype.getEmscripten = function() {
 	this.onChar = Module.cwrap('onChar','number',['number']);
 
 	//callbacks
-	this.emscripten.SetOpenWindowFunc(this.OpenWindowFunc.bind(this));
-    this.emscripten.SetSaveFunc(this.SaveFile.bind(this));
+	em.SetOpenWindowFunc(this.OpenWindowFunc.bind(this));
+    em.SetSaveFunc(this.SaveFile.bind(this));
+    this.emscripten = wasmLoaded.promise.then(function() { 
+        em.then = null; //false promises are the worst! override the one from Modularize that is never actually fired.
+        return em; 
+    }).error(function(e) { console.error(e); });
     return this.emscripten;
 }
 
@@ -377,9 +434,16 @@ MoaiJS.prototype.loadFileSystem = function(romUrl) {
 		}
   };
   console.log("MoaiJS Load Filesystem "+romUrl);
-  this.loadedFileSystems.push(RomLoader.LoadRom(this.getEmscripten(),romUrl, makeProgress('Loading Data'), makeProgress('Installing File')));
+  this.getEmscripten().then(function(em) { console.log("filesystem got ",em); }).rethrow();
+  this.loadedFileSystems.push(
+       this.getEmscripten().then(function(emscripten) { 
+           return RomLoader.LoadRom(emscripten ,romUrl, makeProgress('Loading Data'), makeProgress('Installing File'));
+         }).error(dumpError)
+  );
 }
-
+var dumpError = function(err) {
+    console.error(err);
+}
 
 MoaiJS.prototype.loadFileSystemRaw = function(romDataRaw, fileSystemInfo) {
     var that = this;
@@ -389,14 +453,23 @@ MoaiJS.prototype.loadFileSystemRaw = function(romDataRaw, fileSystemInfo) {
         }
     }
     console.log("MoaiJS Installing Filesystem");
-    this.loadedFileSystems.push(RomLoader.LoadRomRaw(this.getEmscripten(), romDataRaw, fileSystemInfo, makeProgress('Installing File')));
+    this.getEmscripten().then(function(em) { console.log("filesystem got ",em); }).rethrow();
+    this.loadedFileSystems.push(
+        this.getEmscripten().then(function(emscripten) {
+           return RomLoader.LoadRomRaw(emscripten, romDataRaw, fileSystemInfo, makeProgress('Installing File'));
+        }).error(dumpError)
+    );
 }
 
 MoaiJS.prototype.runFunc = function(func) {
     var that=this;
-    D.all(this.loadedFileSystems).then(function(){
+    D.all(this.loadedFileSystems)
+    .then(function() {
+        return that.getEmscripten();
+    })
+    .then(function(emscripten){
 	   console.log("MoaiJS Filesystem Loaded");	
-  	   that.emscripten.run();   
+  	    emscripten.run();   
 		that.hostinit();
        func();
 
@@ -420,7 +493,9 @@ MoaiJS.prototype.runString = function(luaStr) {
 
 MoaiJS.prototype.renderloop = function() {
 	this.onPaint();
-	this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
+	this.getEmscripten().then(function(emscripten) { 
+        emscripten.requestAnimationFrame(this.renderloop.bind(this))
+    }.bind(this));
 }
 
 MoaiJS.prototype.updateloop = function() {
@@ -561,7 +636,9 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	});
 	//now start rendering and updationg
 	this.startUpdates();
-	this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
+	this.getEmscripten().then(function(emscripten) {
+        emscripten.requestAnimationFrame(this.renderloop.bind(this))
+    }.bind(this));
 
 	window.addEventListener("resize", resizeThrottler, false);
 
@@ -625,13 +702,12 @@ MoaiJS.prototype.hostinit = function() {
 MoaiJS.prototype.runhost = function(mainLua) {
 	console.log("runhost called");
 	console.log("restoring save state");
-	this.restoreDocumentDirectory();
-
-    this.hostinit();
-
-	var main = mainLua || 'main.lua'
-	console.log("launching "+main);
-	this.AKURunScript(main);
+    this.restoreDocumentDirectory().then(function() {
+        this.hostinit();
+        var main = mainLua || 'main.lua'
+        console.log("launching "+main);
+        this.AKURunScript(main);
+    }.bind(this))
 }
 
 //Courtesy of Mozilla
@@ -679,14 +755,16 @@ function dataUriToArr(sDataUri) {
 
 
 MoaiJS.prototype.restoreDocumentDirectory = function() {
-   var docsjson  =  window.localStorage.getItem('moai-docs');
-   if (!docsjson) return;
-   var docs = JSON.parse(docsjson);
-   for (var path in docs ) {
-   	  //restore each file
-   	  var data =  dataUriToArr(docs[path]);
-   	  this.emscripten._RestoreFile(path,data);
- 	}
+    return this.getEmscripten().then(function(emscripten) {
+        var docsjson  =  window.localStorage.getItem('moai-docs');
+        if (!docsjson) return;
+        var docs = JSON.parse(docsjson);
+        for (var path in docs ) {
+            //restore each file
+            var data =  dataUriToArr(docs[path]);
+            emscripten._RestoreFile(path,data);
+        }
+    }.bind(this));
 }
 
 MoaiJS.prototype.saveToDocumentDirectory = function(path,filedata) {
@@ -761,7 +839,7 @@ function MoaiPlayer(element, skipTemplate) {
 	this.script = el.attr('data-script') || 'main.lua';
 	var ram = parseInt(el.attr('data-ram') || "48" ,10);
 	var title = el.attr('data-title') || 'Moai Player';
-
+    var wasm = el.attr('data-wasm');
     var paused= false;
 
     pause.on("click",function() {
@@ -811,7 +889,7 @@ function MoaiPlayer(element, skipTemplate) {
     this.hideInfo = function() {
         infoEl[0].style.display = "none";
         canvasWrapperEl[0].style.display="table-row";
-}
+    }
 
 	 window.addEventListener("resize", resizeThrottler, false);
 
@@ -835,7 +913,8 @@ function MoaiPlayer(element, skipTemplate) {
 
 
     this.initMoai = function() {
-        this.moai = new MoaiJS(canvasEl[0], ram * 1024 * 1024, onTitleChange, onStatusChange, onError.bind(this), onPrint.bind(this), this.onResolutionChange.bind(this));
+        this.moai = new MoaiJS(canvasEl[0], ram * 1024 * 1024, onTitleChange, onStatusChange, onError.bind(this), onPrint.bind(this), this.onResolutionChange.bind(this), wasm);
+        return this.moai.initMoai
     }
 }
 

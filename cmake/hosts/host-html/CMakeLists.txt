@@ -42,15 +42,24 @@ set(EXPORTED_FUNCTIONS "['_CallStringFunc','_malloc','_RefreshContext','_Cleanup
 
 #--closure 0 --minify 0
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_ROOT_PATH}/emcc${EMCC_SUFFIX} -O2 -s ASM_JS=1  -s TOTAL_MEMORY=248554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ${CMAKE_CURRENT_SOURCE_DIR}/moaicallbacks.js --js-library ${CMAKE_CURRENT_SOURCE_DIR}/library_webuntz.js 
-                    --pre-js ${CMAKE_CURRENT_SOURCE_DIR}/libmoai-pre.js 
-                    --post-js ${CMAKE_CURRENT_SOURCE_DIR}/libmoai-post.js
-                    --memory-init-file 0
-					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" 
-          -s EXTRA_EXPORTED_RUNTIME_METHODS="['FS_mount','FS_unmount']"
-          -s INVOKE_RUN=0 $<TARGET_FILE:moaishared> -o ${CMAKE_CURRENT_BINARY_DIR}/moaijs.js
-		 
+                    COMMAND ${EMSCRIPTEN_ROOT_PATH}/emcc${EMCC_SUFFIX} -O2
+                    --js-library "${CMAKE_CURRENT_SOURCE_DIR}/moaicallbacks.js" 
+                    --js-library "${CMAKE_CURRENT_SOURCE_DIR}/library_webuntz.js" 
+                    --post-js "${CMAKE_CURRENT_SOURCE_DIR}/libmoai-post.js" 
+                    --memory-init-file 0 
+                    -s WASM=1  
+                    -s TOTAL_MEMORY=251658240 
+                    -s FULL_ES2=1 
+                    -s LINKABLE=1 
+                    -s MODULARIZE=1
+                    -s DEFAULT_LIBRARY_FUNCS_TO_INCLUDE="['$$Browser']"
+                    -s EXPORT_NAME="'CreateMoaiRuntime'"
+                    -s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" 
+                    -s EXTRA_EXPORTED_RUNTIME_METHODS="['FS_mount','FS_unmount','FS_mkdir','FS_filesystems','FS_chdir','FS_root','FS_lookupPath']" 
+                    -s INVOKE_RUN=0 
+                    $<TARGET_FILE:moaishared> -o "${CMAKE_CURRENT_BINARY_DIR}/moaijs.js"
                   )
+
 
 add_dependencies(moaijs moaishared )
 LINK_DIRECTORIES("${LUA_LIB_DIR}")
