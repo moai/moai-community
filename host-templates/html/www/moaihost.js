@@ -352,19 +352,33 @@ MoaiJS.prototype.getEmscripten = function() {
     
     var wasmLoaded = D.defer(); 
     var me = this;
+    var moaiJSModuleKey = 'moaijsModule';
+    var getWasmInstance = function(info) {
+        if (!window[moaiJSModuleKey]) {
+            return fetch(me.wasmfile, { credentials: 'same-origin' })
+                .then(function(response) {
+                    if (!response['ok']) {
+                        throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+                    }
+                    return response['arrayBuffer']();
+                })
+                .then(function(binary) {
+                    return WebAssembly.instantiate(binary, info)
+                })
+                .then(function(output) { 
+                    window[moaiJSModuleKey] = output['module']; //stash it for next use
+                    return output['instance'];
+                })
+        } else {
+            return WebAssembly.instantiate(window[moaiJSModuleKey], info)
+        }
+    }
+
+
     var instantiateWasm = function(info, receiveInstance) {
-        return fetch(me.wasmfile, { credentials: 'same-origin' })
-        .then(function(response) {
-            if (!response['ok']) {
-                throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
-            }
-            return response['arrayBuffer']();
-        })
-        .then(function(binary) {
-            return WebAssembly.instantiate(binary, info)
-        })
-        .then(function(output) {
-            receiveInstance(output['instance']);
+        return getWasmInstance(info)
+        .then(function(instance) {
+            receiveInstance(instance);
             wasmLoaded.resolve()
         })
         .catch(function(reason) {
