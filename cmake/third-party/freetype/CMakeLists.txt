@@ -6,10 +6,10 @@ set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON" )
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON" )
 
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/freetype-2.4.4/src/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/freetype-2.7/src/" )
 
-set ( FREETYPE_INCLUDES "${MOAI_ROOT}/3rdparty/freetype-2.4.4/include"  )
-set ( FT_DIR "${MOAI_ROOT}/3rdparty/freetype-2.4.4" )
+set ( FREETYPE_INCLUDES "${MOAI_ROOT}/3rdparty/freetype-2.7/include"  )
+set ( FT_DIR "${MOAI_ROOT}/3rdparty/freetype-2.7" )
 
 set ( FREETYPE_SOURCES 
 #source
