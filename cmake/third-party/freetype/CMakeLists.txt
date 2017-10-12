@@ -40,7 +40,6 @@ set ( FREETYPE_SOURCES
     ${FT_DIR}/src/base/ftsynth.c
     ${FT_DIR}/src/base/fttype1.c
     ${FT_DIR}/src/base/ftwinfnt.c
-    ${FT_DIR}/src/base/ftxf86.c
     ${FT_DIR}/src/pcf/pcf.c
     ${FT_DIR}/src/pfr/pfr.c
     ${FT_DIR}/src/psaux/psaux.c

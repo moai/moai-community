@@ -9,7 +9,7 @@ endif ( BUILD_ANDROID )
 set ( MOAI_CORE_INCLUDES 
   "${MOAI_ROOT}/src/"
   "${CMAKE_BINARY_DIR}/libmoai/config"
-  "${MOAI_ROOT}/src/moai-core"
+  #"${MOAI_ROOT}/src/moai-core"
 )
 
 include_directories ( 
