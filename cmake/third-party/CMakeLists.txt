@@ -8,6 +8,8 @@ if (MSVC)
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
 endif (MSVC)
 
+add_subdirectory(assimp)
+
 if (BUILD_ANDROID)
   add_subdirectory(android)
 endif(BUILD_ANDROID)

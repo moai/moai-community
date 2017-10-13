@@ -23,6 +23,11 @@ if (MOAI_CRYPTO OR LIB_PATH)
    target_link_libraries ( host-modules moai-crypto )
 endif (MOAI_CRYPTO OR LIB_PATH)
 
+#ASSIMP
+if ( MOAI_ASSIMP OR LIB_PATH)
+  target_link_libraries ( host-modules moai-assimp )
+endif ( MOAI_ASSIMP OR LIB_PATH)
+
 #BOX2D
 if ( MOAI_BOX2D OR LIB_PATH)
   target_link_libraries ( host-modules moai-box2d )
