@@ -56,8 +56,20 @@ set ( FREETYPE_SOURCES
     )
 
 add_library (freetype STATIC ${FREETYPE_SOURCES})
+
+if (MOAI_HARFBUZZ)
+  set ( HARFBUZZ_INCLUDES "${MOAI_ROOT}/3rdparty/harfbuzz-1.0.6" )
+  set ( FREETYPE_INCLUDES "${FREETYPE_INCLUDES}" "${HARFBUZZ_INCLUDES}")
+  target_compile_definitions(freetype PUBLIC "FT_CONFIG_OPTION_USE_HARFBUZZ")
+  target_link_libraries ( freetype harfbuzz )
+endif (MOAI_HARFBUZZ)
+
 target_include_directories (freetype PUBLIC "$<BUILD_INTERFACE:${FREETYPE_INCLUDES}>")
+
 target_link_libraries ( freetype zlib )
+
+
+
 set_target_properties( freetype PROPERTIES FOLDER Third-Party )
 install(TARGETS freetype EXPORT libmoai ARCHIVE DESTINATION lib)
 install(DIRECTORY ${FT_DIR}/include/ DESTINATION include/freetype)
