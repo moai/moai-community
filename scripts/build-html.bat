@@ -1,6 +1,19 @@
 @echo off
 setlocal enableextensions
 call "%~dp0%\env-win.bat"
+
+echo "Setting CMAKE bin path..."
+set "PATH=%PATH%;%CMAKE_PATH%"
+
+echo "Setting Emscripten path..."
+pushd .
+cd "%EMSDK_PATH%"
+call emsdk_env.bat
+popd                         
+
+echo "Setting MingW Gcc path"
+set "PATH=%MINGW_PATH%;%PATH%"
+
 rem Prerequisites
 
 if "%MOAI_SDK_HOME%"=="" echo "Could not determine location of MOAI SDK, please set MOAI_SDK_HOME" && goto ERROR
