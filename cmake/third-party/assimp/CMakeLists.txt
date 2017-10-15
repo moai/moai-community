@@ -18,7 +18,7 @@ file ( GLOB_RECURSE ASSIMP_SOURCES
                 "${CMAKE_CURRENT_SOURCE_DIR}/contrib/openddlparser/code/*.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/contrib/clipper/*.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/contrib/irrXML/*.cpp"
-                "${CMAKE_CURRENT_SOURCE_DIR}/contrib/poly2tri/*.cpp"
+                "${CMAKE_CURRENT_SOURCE_DIR}/contrib/poly2tri/*.c*"
                 "${CMAKE_CURRENT_SOURCE_DIR}/contrib/unzip/*.c"
                 )
 file ( GLOB_RECURSE ASSIMP_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h*" )
