@@ -343,7 +343,7 @@ MoaiJS.prototype.instantiateWasm = function(info, receiveInstance) {
       receiveInstance(output['instance']);
     })
     .catch(function(reason) {
-      console.err('failed to asynchronously prepare wasm: ' + reason);
+      console.error('failed to asynchronously prepare wasm: ' + reason);
     });
 }
 
@@ -379,10 +379,11 @@ MoaiJS.prototype.getEmscripten = function() {
         return getWasmInstance(info)
         .then(function(instance) {
             receiveInstance(instance);
-            wasmLoaded.resolve()
+            console.log("got wasm okay waiting for runtime init"); 
+          //  wasmLoaded.resolve()
         })
         .catch(function(reason) {
-            console.err('failed to asynchronously prepare wasm: ' + reason);
+            console.error('failed to asynchronously prepare wasm: ' + reason);
             wasmLoaded.reject('failed to asynchronously prepare wasm: ' + reason);
         });
     }
@@ -397,7 +398,8 @@ MoaiJS.prototype.getEmscripten = function() {
             print: this.onPrint,
     		printErr: this.onError,
     		noExitRuntime: true,
-    		totalDependencies: 0,
+            totalDependencies: 0,
+            onRuntimeInitialized: function() { console.log("got runtime init resolving"); wasmLoaded.resolve(); },
           //  TOTAL_MEMORY: this.total_memory,
          //   wasmBinaryFile: this.wasmfile,
             instantiateWasm: instantiateWasm

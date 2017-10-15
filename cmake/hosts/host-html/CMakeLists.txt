@@ -48,7 +48,9 @@ add_custom_target( moaijs
                     --post-js "${CMAKE_CURRENT_SOURCE_DIR}/libmoai-post.js" 
                     --memory-init-file 0 
                     -s WASM=1  
-                    -s TOTAL_MEMORY=251658240 
+                    -s ASSERTIONS=1 
+                    -s SAFE_HEAP=1
+                    -s TOTAL_MEMORY=512MB
                     -s FULL_ES2=1 
                     -s LINKABLE=1 
                     -s MODULARIZE=1

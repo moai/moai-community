@@ -18,7 +18,7 @@ A custom host container for sample running, overrides the moai.html from host fo
 <body>
 
 
-<div id="moaiplayer" class="moai-player" data-title="Moai Sample" data-ram="64">
+<div id="moaiplayer" class="moai-player" data-title="Moai Sample" data-ram="512" data-wasm="lib/moaijs.wasm">
 
     <div class="moai-window">
         <div class="moai-info">
@@ -46,7 +46,7 @@ A custom host container for sample running, overrides the moai.html from host fo
 <!-- we need these -->
 <script type="text/javascript" src="host/howler.js"></script>
 <script src="host/vendor/jquery-1.10.2.js"></script>
-<script src="host/vendor/b64.js"></script>
+
 <!-- the app -->
 <script type="text/javascript" src="host/moaihost.js"></script>
 

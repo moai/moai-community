@@ -1,9 +1,12 @@
 local function generateRom(dir, skipList)
 
 local function gen_uuid(romData)
-  return crypto.digest("md5", romData)
+  local writer = MOAIHashWriter.new ()
+	writer:openMD5 ()
+	writer:write ( romData )
+	writer:close ()
+	return writer:getHashHex ()
 end
-
 
 local matchFunc = function(filename) 
     for i, p in ipairs ( skipList ) do

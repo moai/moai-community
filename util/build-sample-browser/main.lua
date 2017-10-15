@@ -56,11 +56,11 @@ MOAIFileSystem.copy(MOAIFileSystem.getAbsoluteFilePath(scriptDir..'/index.html')
                     MOAIFileSystem.getAbsoluteFilePath(config.OUTPUT_DIR..'/index.html'))
                  
 --copy in our html host
-MOAIFileSystem.copy(MOAIFileSystem.getAbsoluteDirectoryPath(MOAI_SDK_HOME..'host-templates/html/www/'),
+MOAIFileSystem.copy(MOAIFileSystem.getAbsoluteDirectoryPath(scriptDir..'../../host-templates/html/www/'),
                     MOAIFileSystem.getAbsoluteDirectoryPath(config.OUTPUT_DIR..'/player/host'))
 
 --setup lib dir
-MOAIFileSystem.copy(MOAIFileSystem.getAbsoluteDirectoryPath(MOAI_SDK_HOME..'lib/html/'),
+MOAIFileSystem.copy(MOAIFileSystem.getAbsoluteDirectoryPath(scriptDir..'../../lib/html/'),
                     MOAIFileSystem.getAbsoluteDirectoryPath(config.OUTPUT_DIR..'/player/lib'))
 
 
@@ -109,6 +109,7 @@ local function dumpRomJs(sampleDir, outfolder)
             MOAIFileSystem.copy(resourceDir..m, dest)
           else
               print("Sample references",m," but not found in resource folder")
+              os.exit(1)
           end
       end
       
