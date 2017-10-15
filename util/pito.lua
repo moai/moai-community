@@ -76,6 +76,13 @@ MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
 if MOAIFileSystem.checkFileExists('main.lua') then
     dofile ( 'main.lua' )
 else
-    usage()
+    --check in moai sdk
+    SCRIPT_DIR  = MOAIFileSystem.getAbsoluteDirectoryPath(string.format ( '%s/pito/%s/', MOAI_SDK_HOME, MOAI_CMD or "help" ))
+    MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
+    if MOAIFileSystem.checkFileExists('main.lua') then
+        dofile ( 'main.lua' )
+    else
+        usage()
+    end
 end
 
