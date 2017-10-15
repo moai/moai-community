@@ -51,22 +51,11 @@ A custom host container for sample running, overrides the moai.html from host fo
 <script type="text/javascript" src="host/moaihost.js"></script>
 
 
+
 <script>
-
-    function getUrlVars()
-    {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
-
-
+    
+    window['moaijsModule'] = window.parent['moaijsModule'];
+    
     function appendScriptTag(path) {
        var s = document.createElement("script");
         s.type = "text/javascript";
@@ -100,7 +89,7 @@ A custom host container for sample running, overrides the moai.html from host fo
                 }, 100);
     };
 
-    var samplePath = getUrlVars()['sample'];
+    var samplePath = window.location.hash.replace('#','');
 
     var romUrl = "../"+samplePath+"/romdata.js";
 
@@ -118,7 +107,9 @@ A custom host container for sample running, overrides the moai.html from host fo
         parent.consoleError(x);
     };
 
-
+    player.clearConsole = function() {
+        parent.consoleClear();
+    }
 
 
     var moaiJSAjax;
@@ -151,6 +142,8 @@ A custom host container for sample running, overrides the moai.html from host fo
             $(".moai-info")[0].style.display = "none";
             $("#moai-play")[0].style.display = "none";
 
+            player.clearConsole()
+            player.onPrint("[[b;#ffc305;] Launching ] [[b;white;]"+playerEl.attr("data-title")+" ]");
 
             var rom = window.parent.getRom();
 
@@ -176,6 +169,11 @@ A custom host container for sample running, overrides the moai.html from host fo
     $("#moai-play").on("click",doRun);
     $("#moai-stop").on("click", function() {
         player.stop();
+        //cache our module for after refresh
+        window.parent['moaijsModule'] = window['moaijsModule'];
+        //reload page (it is the only way to clear the memory atm!)
+        window.location.reload();
+
         $(".moai-canvas-wrapper")[0].style.display = "none";
         $(".moai-info")[0].style.display = "table-row";
         $("#moai-play")[0].style.display = "inline-block";
@@ -190,6 +188,7 @@ A custom host container for sample running, overrides the moai.html from host fo
             }
             player.moai.getEmscripten();
             player.moai.runString(x);
+            
         });
 
     }

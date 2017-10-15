@@ -12,6 +12,10 @@
                 this.terminal.echo(x);
             }.bind(this);
 
+            window.consoleClear = function(x) {
+                this.terminal.clear();
+            }.bind(this);
+
             window.consoleError = function(x) {
                 this.terminal.error(x);
             }.bind(this);
@@ -20,7 +24,7 @@
                         this.trigger("consoleCommand", command);
             }.bind(this),
                     {
-                        greetings: '[[b;#FFFFFF;#FFFFFF00]Moai Sample Player v1.00]',
+                        greetings: '[[b;#FFFFFF;#FFFFFF00]Moai Sample Player v2.00]',
                         name: 'sample_console',
                         prompt: '[[b;#A1B56C;#FFFFFF00]moai$ ]'
                     });

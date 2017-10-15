@@ -27,7 +27,7 @@ target_compile_definitions( harfbuzz PUBLIC "HAVE_FREETYPE" "HAVE_OT" "HAVE_UCDN
 
 if ( BUILD_HTML OR BUILD_LINUX )
     target_compile_definitions( harfbuzz PUBLIC "HB_NO_MT" ) #no multithreading in emscripten and none built in on linux
-endif ( BUILD_HTML )
+endif ( BUILD_HTML OR BUILD_LINUX )
 
 target_link_libraries( harfbuzz freetype )
 set_target_properties( harfbuzz PROPERTIES FOLDER Third-Party )

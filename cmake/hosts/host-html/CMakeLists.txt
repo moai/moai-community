@@ -48,11 +48,10 @@ add_custom_target( moaijs
                     --post-js "${CMAKE_CURRENT_SOURCE_DIR}/libmoai-post.js" 
                     --memory-init-file 0 
                     -s WASM=1  
-                    -s ASSERTIONS=1 
-                    -s SAFE_HEAP=1
-                    -s TOTAL_MEMORY=512MB
+                    -s TOTAL_MEMORY=32MB
+                    -s ALLOW_MEMORY_GROWTH=1
                     -s FULL_ES2=1 
-                    -s LINKABLE=1 
+                    #-s LINKABLE=1 
                     -s MODULARIZE=1
                     -s DEFAULT_LIBRARY_FUNCS_TO_INCLUDE="['$$Browser']"
                     -s EXPORT_NAME="'CreateMoaiRuntime'"
