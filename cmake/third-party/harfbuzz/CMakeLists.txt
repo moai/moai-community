@@ -25,9 +25,9 @@ add_library( harfbuzz STATIC ${HARFBUZZ_SOURCES} ${HARFBUZZ_HEADERS} )
 target_include_directories ( harfbuzz PUBLIC "$<BUILD_INTERFACE:${HARFBUZZ_INCLUDES}>")
 target_compile_definitions( harfbuzz PUBLIC "HAVE_FREETYPE" "HAVE_OT" "HAVE_UCDN")
 
-if ( BUILD_HTML OR BUILD_LINUX )
+if ( BUILD_HTML OR BUILD_LINUX OR BUILD_ANDROID )
     target_compile_definitions( harfbuzz PUBLIC "HB_NO_MT" ) #no multithreading in emscripten and none built in on linux
-endif ( BUILD_HTML OR BUILD_LINUX )
+endif ( BUILD_HTML OR BUILD_LINUX OR BUILD_ANDROID )
 
 target_link_libraries( harfbuzz freetype )
 set_target_properties( harfbuzz PROPERTIES FOLDER Third-Party )

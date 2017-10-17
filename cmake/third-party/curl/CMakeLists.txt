@@ -44,6 +44,9 @@ project ( curl )
   if (BUILD_ANDROID)
     set ( CURL_INCLUDES 
         "${MOAI_ROOT}/src/custom-include/curl/android" 
+        "${MOAI_ROOT}/src/custom-include/curl/android/curl" 
+        "${MOAI_ROOT}/3rdparty/curl/include/"
+        "${MOAI_ROOT}/3rdparty/curl/lib"
        )
   endif (BUILD_ANDROID)
 
