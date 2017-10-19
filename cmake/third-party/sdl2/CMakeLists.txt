@@ -6,7 +6,7 @@ set (SDL2_SOURCE_DIR "${MOAI_ROOT}/3rdparty/sdl2-2.0.4")
 set (SDL2_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/binarydir")
 ExternalProject_Add(sdl2
    SOURCE_DIR "${SDL2_SOURCE_DIR}"
-   CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/install"  -DSDL_SHARED=OFF 
+   CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/install"  -DSDL_SHARED=OFF -DVIDEO_WAYLAND=OFF
    CMAKE_CACHE_ARGS "-DSDL2_SOURCE_DIR:string=${SDL2_SOURCE_DIR}" "-DSDL2_BINARY_DIR:string=${SDL2_BINARY_DIR}" "-DSDL_STATIC:bool=on" "-DSDL_SHARED:bool=off" 
    PREFIX "${CMAKE_CURRENT_BINARY_DIR}/sdl2-2.0.4"
    INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/install"
@@ -29,7 +29,7 @@ add_library(SDL2-static INTERFACE)
 install(FILES ${install_dir}/lib/libSDL2.a DESTINATION lib ) 
 #todo install headers too :)
 target_include_directories(SDL2-static INTERFACE "${SDL2_SOURCE_DIR}/include_moai" "${SDL2_SOURCE_DIR}/include" )
-target_link_libraries(SDL2-static INTERFACE SDL2-static-imp )
+target_link_libraries(SDL2-static INTERFACE SDL2-static-imp sndio)
 
 
 install(TARGETS SDL2-static EXPORT libmoai ARCHIVE DESTINATION lib)
