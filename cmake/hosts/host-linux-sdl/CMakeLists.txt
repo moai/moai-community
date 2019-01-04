@@ -87,6 +87,7 @@ target_link_libraries ( moai
   pthread
   rt
   dl
+  sndio
   ${XI_LIBRARY}
   ${OPENGL_LIBRARIES}
   ${X11_Xxf86vm_LIB}
