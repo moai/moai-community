@@ -28,6 +28,14 @@ if [ ! -z "$NDK_PATH" ]; then
    echo "No NDK_PATH specified, Android will not be buildable"
 fi
 
+
+if [ ! -z "$ANDROID_SDK_HOME" ]; then
+   echo "Setting Android SDK path..."
+   export ANDROID_SDK_HOME=$ANDROID_SDK_HOME
+ else
+   echo "No ANDROID_SDK_HOME specified, Android hosts will need path set in local.properties to be buildable"
+fi
+
 if [ ! -z "$EMSDK_PATH" ]; then
   echo "Setting Emscripten path..."
   pushd $EMSDK_PATH > /dev/null

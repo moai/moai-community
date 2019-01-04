@@ -26,7 +26,7 @@ then
       
     ;;
     Linux*)
-        MOAI_BUILD_SCRIPT="bin/build-linux.sh"
+        MOAI_BUILD_SCRIPT="$PITO_HOME/scripts/build-linux.sh"
     ;;
     *)
         echo "Unknown OS"

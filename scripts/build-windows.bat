@@ -1,7 +1,7 @@
 @echo off
 rem :: Determine target directory and cmake generator
 setlocal enableextensions
-
+call "%~dp0%\env-win.bat"
 
 if "%MOAI_SDK_HOME%"=="" (
 	echo Could not determine location of MOAI SDK, please set MOAI_SDK_HOME

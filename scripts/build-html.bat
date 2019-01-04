@@ -1,6 +1,6 @@
 @echo off
 setlocal enableextensions
-
+call "%~dp0%\env-win.bat"
 rem Prerequisites
 
 if "%MOAI_SDK_HOME%"=="" echo "Could not determine location of MOAI SDK, please set MOAI_SDK_HOME" && goto ERROR
@@ -54,6 +54,7 @@ rem Install into lib
 
 mkdir "%PITOROOT%\lib\html"
 copy /y moaijs.js "%PITOROOT%\lib\html\moaijs.js"
+copy /y moaijs.wasm "%PITOROOT%\lib\html\moaijs.wasm"
 
 goto END
 

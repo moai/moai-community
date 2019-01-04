@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6304D3AF1E6D7B630084B62F /* libmoai-ios-3rdparty-mbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6304D3AE1E6D7B630084B62F /* libmoai-ios-3rdparty-mbedtls.a */; };
 		633667A71A3C4C100020E6BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 633667A61A3C4C100020E6BF /* Images.xcassets */; };
-		636B59711CA77BCE00AAD4B0 /* libmoai-ios-3rdparty-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B59591CA77BCE00AAD4B0 /* libmoai-ios-3rdparty-crypto.a */; };
 		636B59721CA77BCE00AAD4B0 /* libmoai-ios-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B595A1CA77BCE00AAD4B0 /* libmoai-ios-apple.a */; };
 		636B59731CA77BCE00AAD4B0 /* libmoai-ios-audio-sampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B595B1CA77BCE00AAD4B0 /* libmoai-ios-audio-sampler.a */; };
 		636B59741CA77BCE00AAD4B0 /* libmoai-ios-billing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B595C1CA77BCE00AAD4B0 /* libmoai-ios-billing.a */; };
@@ -95,8 +95,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6304D3AE1E6D7B630084B62F /* libmoai-ios-3rdparty-mbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-mbedtls.a"; path = "lib/libmoai-ios-3rdparty-mbedtls.a"; sourceTree = "<group>"; };
 		633667A61A3C4C100020E6BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = res/Images.xcassets; sourceTree = "<group>"; };
-		636B59591CA77BCE00AAD4B0 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-crypto.a"; path = "lib/libmoai-ios-3rdparty-crypto.a"; sourceTree = "<group>"; };
 		636B595A1CA77BCE00AAD4B0 /* libmoai-ios-apple.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-apple.a"; path = "lib/libmoai-ios-apple.a"; sourceTree = "<group>"; };
 		636B595B1CA77BCE00AAD4B0 /* libmoai-ios-audio-sampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-audio-sampler.a"; path = "lib/libmoai-ios-audio-sampler.a"; sourceTree = "<group>"; };
 		636B595C1CA77BCE00AAD4B0 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-billing.a"; path = "lib/libmoai-ios-billing.a"; sourceTree = "<group>"; };
@@ -201,13 +201,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6304D3AF1E6D7B630084B62F /* libmoai-ios-3rdparty-mbedtls.a in Frameworks */,
 				636B599C1CA783E200AAD4B0 /* FBSDKCoreKit.framework in Frameworks */,
 				636B599D1CA783E200AAD4B0 /* FBSDKLoginKit.framework in Frameworks */,
 				63A2AD351D1BEFB3008D5D59 /* libmoai-ios-3rdparty-liblua.a in Frameworks */,
 				63A2AD3D1D1BEFB3008D5D59 /* libmoai-ios-crittercism.a in Frameworks */,
 				63A2AD421D1BEFB3008D5D59 /* libmoai-ios-tapjoy.a in Frameworks */,
 				636B599E1CA783E200AAD4B0 /* FBSDKShareKit.framework in Frameworks */,
-				636B59711CA77BCE00AAD4B0 /* libmoai-ios-3rdparty-crypto.a in Frameworks */,
 				636B59721CA77BCE00AAD4B0 /* libmoai-ios-apple.a in Frameworks */,
 				636B59731CA77BCE00AAD4B0 /* libmoai-ios-audio-sampler.a in Frameworks */,
 				636B59741CA77BCE00AAD4B0 /* libmoai-ios-billing.a in Frameworks */,
@@ -277,6 +277,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6304D3AD1E6D7B600084B62F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		636B59981CA77F3F00AAD4B0 /* SDK Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +309,7 @@
 				63CF1A1C1A065D4900F731F1 /* Info.plist */,
 				63CF1AF81A066B7C00F731F1 /* main.lua */,
 				63CF19C21A065B5400F731F1 /* Products */,
+				6304D3AD1E6D7B600084B62F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -316,6 +324,7 @@
 		63CF1AA51A065E0F00F731F1 /* Moai Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6304D3AE1E6D7B630084B62F /* libmoai-ios-3rdparty-mbedtls.a */,
 				63A2AD1D1D1BEFB3008D5D59 /* libmoai-ios-3rdparty-contrib.a */,
 				63A2AD1E1D1BEFB3008D5D59 /* libmoai-ios-3rdparty-expat.a */,
 				63A2AD1F1D1BEFB3008D5D59 /* libmoai-ios-3rdparty-freetype.a */,
@@ -336,7 +345,6 @@
 				63A2AD2E1D1BEFB3008D5D59 /* libmoai-ios-tapjoy.a */,
 				63A2AD2F1D1BEFB3008D5D59 /* libmoai-ios-urban-airship.a */,
 				63A2AD301D1BEFB3008D5D59 /* libmoai-ios-vungle.a */,
-				636B59591CA77BCE00AAD4B0 /* libmoai-ios-3rdparty-crypto.a */,
 				636B595A1CA77BCE00AAD4B0 /* libmoai-ios-apple.a */,
 				636B595B1CA77BCE00AAD4B0 /* libmoai-ios-audio-sampler.a */,
 				636B595C1CA77BCE00AAD4B0 /* libmoai-ios-billing.a */,

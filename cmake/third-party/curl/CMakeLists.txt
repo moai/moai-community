@@ -2,22 +2,20 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( curl )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP -DCURL_DISABLE_NTLM -DUSE_MBEDTLS -DHAVE_CONFIG_H"  )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP -DCURL_DISABLE_NTLM -DUSE_MBEDTLS -DHAVE_CONFIG_H" )
   
   if ( BUILD_ANDROID OR BUILD_IOS )
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_ARES" )
     set ( USE_ARES true )
   endif (BUILD_ANDROID OR BUILD_IOS)
 
-  if ( MOAI_OPENSSL )
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DUSE_SSLEAY -DUSE_OPENSSL ")
-  endif ( MOAI_OPENSSL )
-
-
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
-        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
+        "${MOAI_ROOT}/src/custom-include/curl/linux"
+        "${MOAI_ROOT}/src/custom-include/curl/linux/curl"
+        "${MOAI_ROOT}/3rdparty/curl/include/" 
+        "${MOAI_ROOT}/3rdparty/curl/lib/" 
        )
       set ( RUN_CURL_CONFIGURE true )
   endif (BUILD_LINUX)
@@ -25,27 +23,27 @@ project ( curl )
 
   if (BUILD_WINDOWS)
       set ( CURL_INCLUDES 
-        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
+        "${MOAI_ROOT}/3rdparty/curl/include/" 
      
       )
   endif (BUILD_WINDOWS)
   
   if (BUILD_OSX)
         set ( CURL_INCLUDES
-          "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-osx/"
+          "${MOAI_ROOT}/3rdparty/curl/include-osx/"
         )
     endif (BUILD_OSX)
 
   if (BUILD_HTML)
         set ( CURL_INCLUDES
-          "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/"
+          "${MOAI_ROOT}/3rdparty/curl/include/"
         )
     endif (BUILD_HTML)
 
 
   if (BUILD_ANDROID)
     set ( CURL_INCLUDES 
-        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-android/" 
+        "${MOAI_ROOT}/src/custom-include/curl/android" 
        )
   endif (BUILD_ANDROID)
 
@@ -56,145 +54,152 @@ project ( curl )
   endif (BUILD_IOS)
 
   set (CURL_HEADERS "")
-  if (RUN_CURL_CONFIGURE)
 
-      
-      set (SSL_PARAMS "--without-ssl")
-
-      if (MOAI_OPENSSL)
-         get_target_property(SSLDIR ssl ARCHIVE_OUTPUT_DIRECTORY )
-         
-         set(SSL_PARAMS "--with-ssl=$<TARGET_FILE_DIR:ssl> --with-ca-path=/etc/ssl/certs/")
-      endif (MOAI_OPENSSL)
-
-      add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/config.status"
-                       COMMAND "/bin/sh"
-                       "${MOAI_ROOT}/3rdparty/curl-7.19.7/configure"
-                       "--no-create" "--disable-shared" "--disable-optimize" ${SSL_PARAMS} "--disable-ldap"
-                       "--without-libidn" "--without-libssh2" 
-                       "CC=${CMAKE_C_COMPILER}"
-                       "CFLAGS=${CMAKE_C_FLAGS} -DZL_REPLACE_H"
-                       DEPENDS ssl
-                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-                      )
-      
-
-      add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h"
-                                "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"
-                        COMMAND "${CMAKE_CURRENT_BINARY_DIR}/config.status"
-                       "--header=include/curl/curlbuild.h"
-                       "--header=include/curl/curl_config.h:lib/curl_config.h.in"
-                       DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/config.status"
-                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
-
-    
-
-    set ( CURL_INCLUDES
-          "${CMAKE_CURRENT_BINARY_DIR}/include/curl"
-          "${CMAKE_CURRENT_BINARY_DIR}/include" ${CURL_INCLUDES} )
-
-    set ( CURL_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"
-                       "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h")
-  endif (RUN_CURL_CONFIGURE)
-
-
-
-  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/curl-7.19.7/lib" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/curl" )
   set ( CURL_SOURCES 
    
-    #${CMAKE_CURRENT_SOURCE_DIR}/amigaos.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/base64.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/connect.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/content_encoding.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/cookie.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/curl_addrinfo.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/curl_memrchr.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/curl_rand.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/curl_sspi.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/dict.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/easy.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/escape.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/file.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/formdata.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/ftp.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/getenv.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/getinfo.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/gtls.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hash.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hostares.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hostasyn.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hostip.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hostip4.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hostip6.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hostsyn.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/hostthre.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/http.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/http_chunks.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/http_digest.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/http_negotiate.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/http_ntlm.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/if2ip.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/inet_ntop.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/inet_pton.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/krb4.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/krb5.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/ldap.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/llist.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/md5.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/memdebug.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/mprintf.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/multi.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/netrc.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/nonblock.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/nss.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/nwlib.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/nwos.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/parsedate.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/progress.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/qssl.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/rawstr.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/security.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/select.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/sendf.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/share.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/slist.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/socks.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/socks_gssapi.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/socks_sspi.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/speedcheck.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/splay.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssh.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/sslgen.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssluse.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/strdup.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/strequal.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/strerror.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/strtok.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/strtoofft.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/telnet.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/tftp.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/timeval.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/transfer.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/url.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/version.c
+   # ${CMAKE_CURRENT_SOURCE_DIR}/lib/amigaos.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/asyn-ares.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/asyn-thread.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/base64.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/conncache.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/connect.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/content_encoding.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/cookie.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_addrinfo.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_des.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_endian.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_fnmatch.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_gethostname.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_gssapi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_memrchr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_multibyte.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_ntlm_core.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_ntlm_wb.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_rtmp.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_sasl.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_sspi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/curl_threads.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/dict.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/dotdot.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/easy.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/escape.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/file.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/fileinfo.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/formdata.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/ftp.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/ftplistparser.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/getenv.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/getinfo.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/gopher.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hash.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hmac.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hostasyn.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hostcheck.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hostip.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hostip4.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hostip6.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/hostsyn.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/http.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/http2.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/http_chunks.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/http_digest.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/http_negotiate.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/http_ntlm.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/http_proxy.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/idn_win32.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/if2ip.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/imap.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/inet_ntop.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/inet_pton.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/krb5.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/ldap.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/llist.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/md4.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/md5.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/memdebug.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/mprintf.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/multi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/netrc.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/non-ascii.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/nonblock.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/nwlib.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/nwos.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/openldap.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/parsedate.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/pingpong.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/pipeline.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/pop3.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/progress.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/rand.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/rtsp.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/security.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/select.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/sendf.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/share.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/slist.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/smb.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/smtp.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/socks.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/socks_gssapi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/socks_sspi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/speedcheck.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/splay.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/ssh.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/strcase.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/strdup.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/strerror.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/strtok.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/strtoofft.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/system_win32.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/telnet.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/tftp.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/timeval.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/transfer.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/url.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/version.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/warnless.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/wildcard.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/x509asn1.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/cleartext.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/cram.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/digest.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/digest_sspi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/krb5_gssapi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/krb5_sspi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/ntlm.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/ntlm_sspi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/oauth2.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/spnego_gssapi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/spnego_sspi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vauth/vauth.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/axtls.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/cyassl.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/darwinssl.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/gskit.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/gtls.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/mbedtls.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/nss.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/openssl.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/polarssl.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/polarssl_threadlock.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/schannel.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/vtls/vtls.c
+
 
    )
 
 
  
   add_library(curl STATIC ${CURL_SOURCES} ${CURL_HEADERS})
-  target_include_directories (curl PUBLIC "$<BUILD_INTERFACE:${CURL_INCLUDES}>" PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
-  target_link_libraries( curl zlib )
+  target_include_directories (curl PUBLIC "$<BUILD_INTERFACE:${CURL_INCLUDES}>" )
+  target_link_libraries( curl zlib mbedtls)
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
 
   if (USE_ARES)  
     target_link_libraries( curl cares )
   endif (USE_ARES)
 
-  if (MOAI_OPENSSL)
-     target_link_libraries( curl ssl )
-  endif (MOAI_OPENSSL)
- 
   if (BUILD_WINDOWS)
     target_link_libraries( curl ws2_32 )
   endif (BUILD_WINDOWS)
