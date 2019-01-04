@@ -29,7 +29,7 @@ add_library(SDL2-static INTERFACE)
 install(FILES ${install_dir}/lib/libSDL2.a DESTINATION lib ) 
 #todo install headers too :)
 target_include_directories(SDL2-static INTERFACE "${SDL2_SOURCE_DIR}/include_moai" "${SDL2_SOURCE_DIR}/include" )
-target_link_libraries(SDL2-static INTERFACE SDL2-static-imp )
+target_link_libraries(SDL2-static INTERFACE SDL2-static-imp sndio )
 
 
 install(TARGETS SDL2-static EXPORT libmoai ARCHIVE DESTINATION lib)
